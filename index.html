@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- Mermaid for Architecture Diagram -->
-    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
         
@@ -48,14 +48,14 @@
         .accordion-content {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.5s ease-out, opacity 0.3s ease;
+            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
             opacity: 0;
         }
 
         .accordion-item.active .accordion-content {
-            max-height: 1200px; 
+            max-height: 3000px; 
             opacity: 1;
-            margin-top: 1rem;
+            margin-top: 1.5rem;
         }
 
         .chevron-icon {
@@ -66,13 +66,13 @@
             transform: rotate(180deg);
         }
 
-        /* Architecture Diagram Styling */
+        /* Mermaid Styling */
         .mermaid {
             background: transparent !important;
             display: flex;
             justify-content: center;
-            min-height: 450px;
-            padding: 20px;
+            min-height: 400px;
+            width: 100%;
         }
 
         /* Custom Scrollbar */
@@ -96,8 +96,6 @@
         <div class="hidden md:flex space-x-8 text-sm font-medium">
             <a href="#home" class="nav-link">Home</a>
             <a href="#experience" class="nav-link">Experience</a>
-            <a href="#architecture" class="nav-link">Architecture</a>
-            <a href="#projects" class="nav-link">Projects</a>
             <a href="#skills" class="nav-link">Skills</a>
         </div>
         <div class="flex items-center space-x-4">
@@ -123,14 +121,14 @@
         </h1>
         <p class="max-w-2xl text-slate-400 text-lg md:text-xl mb-10">
             <b>Data Engineer</b> leading hybrid cloud analytics. <br class="hidden md:block">
-            Managing 200+ Spark pipelines processing <b>1B+ rows daily</b> with <b>Spark JDBC & DataFrames</b>.
+            Managing 300+ Spark pipelines processing <b>1B+ rows daily</b> with <b>Spark JDBC & DataFrames</b>.
         </p>
         <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
             <a href="#experience" class="px-8 py-4 bg-indigo-600 hover:bg-indigo-500 rounded-xl font-bold transition-all flex items-center justify-center">
-                Experience <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+                View Experience <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
             </a>
-            <a href="#architecture" class="px-8 py-4 glass-card rounded-xl font-bold hover:bg-slate-800 transition-all flex items-center justify-center">
-                Technical Architecture
+            <a href="#skills" class="px-8 py-4 glass-card rounded-xl font-bold hover:bg-slate-800 transition-all flex items-center justify-center">
+                Technical Stack
             </a>
         </div>
     </section>
@@ -140,92 +138,19 @@
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
             <div class="p-6 glass-card rounded-2xl text-center">
                 <div class="text-3xl font-bold mb-1">100M+</div>
-                <div class="text-xs text-slate-400 uppercase tracking-widest">JDBC Ingestion/Load</div>
+                <div class="text-xs text-slate-400 uppercase tracking-widest">JDBC Ingestion</div>
             </div>
             <div class="p-6 glass-card rounded-2xl text-center">
-                <div class="text-3xl font-bold mb-1">200+</div>
-                <div class="text-xs text-slate-400 uppercase tracking-widest">Spark Pipelines</div>
+                <div class="text-3xl font-bold mb-1">300+</div>
+                <div class="text-xs text-slate-400 uppercase tracking-widest">Oozie Workflows</div>
             </div>
             <div class="p-6 glass-card rounded-2xl text-center">
                 <div class="text-3xl font-bold mb-1">1B+</div>
                 <div class="text-xs text-slate-400 uppercase tracking-widest">Daily Rows</div>
             </div>
             <div class="p-6 glass-card rounded-2xl text-center">
-                <div class="text-3xl font-bold mb-1">4h+</div>
-                <div class="text-xs text-slate-400 uppercase tracking-widest">Efficiency Gain</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Architecture Visualization Section -->
-    <section id="architecture" class="py-24 px-6 max-w-6xl mx-auto">
-        <h2 class="text-3xl font-bold mb-4 text-center">Enterprise Data Pipeline</h2>
-        <p class="text-slate-400 text-center mb-12">Scalable Ingestion & Transformation Architecture</p>
-        
-        <div class="glass-card p-4 md:p-12 rounded-3xl overflow-hidden bg-slate-900/40">
-            <div class="mermaid">
-graph TD
-    subgraph Sources [Data Sources]
-        direction LR
-        MySQL[(MySQL)]
-        Tibero[(Tibero)]
-    end
-
-    subgraph Orchestration [Orchestration & Compute]
-        direction TB
-        AF[Airflow]
-        OZ[Oozie]
-        subgraph SparkEngine [Spark Processing Engine]
-            direction TB
-            JDBC[Spark JDBC Ingestion]
-            DF[Spark DataFrame Transformation]
-            JDBC --> DF
-        end
-    end
-
-    subgraph Storage [Cloud Data Lake]
-        HDFS[Azure HDFS]
-        Hive[Hive Metastore]
-        HDFS --- Hive
-    end
-
-    subgraph Consumption [Downstream Analytics]
-        JH[Jupyter Hub]
-        PB[Power BI]
-        SS[Apache Superset]
-    end
-
-    MySQL -- "100M+ Rows" --> JDBC
-    Tibero -- "100M+ Rows" --> JDBC
-    AF -- "200+ Pipelines" --> SparkEngine
-    OZ -- "Legacy Flows" --> SparkEngine
-    DF -- "Parquet Load" --> HDFS
-    HDFS --> JH
-    HDFS --> PB
-    HDFS --> SS
-
-    style Sources fill:#1e293b,stroke:#475569,color:#fff
-    style Orchestration fill:#1e1b4b,stroke:#6366f1,color:#fff
-    style SparkEngine fill:#312e81,stroke:#818cf8,color:#fff
-    style Storage fill:#0f172a,stroke:#4f46e5,color:#fff
-    style Consumption fill:#064e3b,stroke:#10b981,color:#fff
-            </div>
-            
-            <div class="mt-12 grid md:grid-cols-2 gap-8 text-sm text-slate-400 border-t border-white/5 pt-8">
-                <div class="flex items-start">
-                    <div class="bg-indigo-500/20 p-2 rounded-lg mr-4"><i data-lucide="zap" class="text-indigo-400 w-5 h-5"></i></div>
-                    <div>
-                        <h4 class="font-bold text-white mb-1">Spark JDBC & DataFrame</h4>
-                        <p>Extracting over 100M rows in parallel from heterogeneous databases (MySQL, Tibero) using Spark JDBC, and performing high-performance distributed pre-processing using the Spark DataFrame API.</p>
-                    </div>
-                </div>
-                <div class="flex items-start">
-                    <div class="bg-emerald-500/20 p-2 rounded-lg mr-4"><i data-lucide="git-branch" class="text-emerald-400 w-5 h-5"></i></div>
-                    <div>
-                        <h4 class="font-bold text-white mb-1">200+ Automated Pipelines</h4>
-                        <p>Combining Airflow and Oozie to operate over 200 complex data pipelines, automating the entire process from extraction to HDFS storage and monitoring.</p>
-                    </div>
-                </div>
+                <div class="text-3xl font-bold mb-1">~4h</div>
+                <div class="text-xs text-slate-400 uppercase tracking-widest">Latency Reduction</div>
             </div>
         </div>
     </section>
@@ -242,7 +167,7 @@ graph TD
                             <h3 class="text-2xl font-bold text-white group-hover:text-indigo-400 transition-colors">Hanwha General Insurance</h3>
                             <p class="text-slate-500 font-medium text-sm">Jul 2024 – Present</p>
                         </div>
-                        <p class="text-indigo-400 font-semibold">Data Engineer</p>
+                        <p class="text-indigo-400 font-semibold uppercase tracking-wider text-xs">Data Engineer | Seoul, Korea</p>
                     </div>
                     <div class="ml-4 chevron-icon text-slate-500">
                         <i data-lucide="chevron-down"></i>
@@ -250,18 +175,85 @@ graph TD
                 </div>
                 <div class="accordion-content px-8 pb-8">
                     <div class="border-t border-white/5 pt-6">
-                        <div class="mb-6 p-4 bg-indigo-500/5 rounded-xl border border-indigo-500/20">
-                            <p class="text-xs font-bold text-indigo-400 uppercase tracking-widest mb-2">Technical Core</p>
-                            <p class="text-sm text-slate-300">Spark (JDBC, DataFrame), Airflow, Oozie, Azure HDInsight, MySQL, Tibero, HDFS</p>
+                        <!-- Key Responsibilities (Vertical Layout for readability) -->
+                        <div class="flex flex-col space-y-8 mb-10">
+                            <!-- Platform & Pipeline Section -->
+                            <div>
+                                <h4 class="text-white font-bold mb-4 flex items-center text-lg">
+                                    <i data-lucide="server" class="w-5 h-5 mr-2 text-indigo-400"></i> Platform & Pipeline
+                                </h4>
+                                <ul class="space-y-3 text-slate-400 text-sm md:text-base ml-1">
+                                    <li class="flex items-start"><span class="text-indigo-500 mr-3 mt-1">•</span> <span><b>Large-Scale Ingestion:</b> Built parallel extraction pipelines using <b>Spark JDBC</b> to ingest 100M+ rows from MySQL/Tibero into Azure HDFS.</span></li>
+                                    <li class="flex items-start"><span class="text-indigo-500 mr-3 mt-1">•</span> <span><b>Workflow Mgmt:</b> Designed and maintained <b>300+ Oozie workflows</b> processing ~1B rows/day with robust retry and failure isolation.</span></li>
+                                    <li class="flex items-start"><span class="text-indigo-500 mr-3 mt-1">•</span> <span><b>Optimization:</b> Migrated Sqoop-based CDC to Spark JDBC, reducing end-to-end latency from <b>7h to 3h</b>.</span></li>
+                                    <li class="flex items-start"><span class="text-indigo-500 mr-3 mt-1">•</span> <span><b>Platform Ops:</b> Managed Azure HDInsight-based Spark/Hive platforms with YARN-level resource tuning.</span></li>
+                                </ul>
+                            </div>
+                            
+                            <!-- Real-time & BI Section -->
+                            <div>
+                                <h4 class="text-white font-bold mb-4 flex items-center text-lg">
+                                    <i data-lucide="zap" class="w-5 h-5 mr-2 text-indigo-400"></i> Real-time & BI
+                                </h4>
+                                <ul class="space-y-3 text-slate-400 text-sm md:text-base ml-1">
+                                    <li class="flex items-start"><span class="text-indigo-500 mr-3 mt-1">•</span> <span><b>IoT Streaming:</b> Developed Spark Structured Streaming pipelines ingesting <b>100K events/sec</b> from 700K devices via Kafka.</span></li>
+                                    <li class="flex items-start"><span class="text-indigo-500 mr-3 mt-1">•</span> <span><b>BI Infrastructure:</b> Built end-to-end Power BI infra, including on-prem gateway and security coordination.</span></li>
+                                    <li class="flex items-start"><span class="text-indigo-500 mr-3 mt-1">•</span> <span><b>Modern Stack:</b> Led PoCs for <b>Apache Superset</b> and <b>Databricks</b> to modernize the analytical ecosystem.</span></li>
+                                </ul>
+                            </div>
                         </div>
-                        <ul class="space-y-4 text-slate-400 list-disc list-inside text-sm md:text-base">
-                            <li><b>Large-Scale Ingestion:</b> Built parallel extraction pipelines using <b>Spark JDBC</b> to ingest over 100M rows from MySQL and Tibero RDBMS into Azure HDFS.</li>
-                            <li><b>DataFrame Processing:</b> Optimized complex settlement and statistical logic using <b>Spark DataFrame API</b> for high-performance distributed processing.</li>
-                            <li><b>Pipeline Orchestration:</b> Designed and operated <b>200+ data pipelines</b> using Airflow and Oozie, managing a daily volume of over 1B rows.</li>
-                            <li><b>Analytical Ecosystem:</b> Integrated Jupyter Hub with Azure HDInsight clusters to provide interactive data exploration environments for data scientists.</li>
-                            <li><b>Platform Optimization:</b> Managed Azure HDInsight Spark/Hive platforms, performing YARN-level resource tuning and Spark memory configuration.</li>
-                            <li><b>Real-time Streaming:</b> Developed Spark Structured Streaming pipelines to ingest ~100K events/sec from 700K IoT devices.</li>
-                        </ul>
+
+                        <!-- Technical Architecture Diagram -->
+                        <div class="bg-slate-900/60 rounded-2xl p-6 border border-white/5 overflow-x-auto">
+                            <h4 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-8 text-center">Technical Architecture: Hanwha Data Platform</h4>
+                            <pre class="mermaid">
+graph TD
+    subgraph Sources [Data Sources]
+        direction LR
+        MySQL[(MySQL)]
+        Tibero[(Tibero)]
+        IoT[700K IoT Devices]
+    end
+
+    subgraph Compute [Spark Processing Engine]
+        direction TB
+        Kafka[Kafka Cluster]
+        JDBC[Spark JDBC Ingestion]
+        DF[Spark DataFrame Transform]
+        SSS[Structured Streaming]
+        
+        JDBC --> DF
+        Kafka --> SSS
+    end
+
+    subgraph Storage [Azure HDInsight Lake]
+        HDFS[Azure HDFS]
+        Hive[Hive Metastore]
+        HDFS --- Hive
+    end
+
+    subgraph Consumption [Analytics Layer]
+        JH[Jupyter Hub]
+        PB[Power BI]
+        SS[Apache Superset]
+    end
+
+    MySQL --> JDBC
+    Tibero --> JDBC
+    IoT --> Kafka
+    DF --> HDFS
+    SSS --> HDFS
+    HDFS --> JH
+    HDFS --> PB
+    HDFS --> SS
+
+    style Sources fill:#1e293b,stroke:#475569,color:#fff
+    style Compute fill:#312e81,stroke:#818cf8,color:#fff
+    style Storage fill:#0f172a,stroke:#4f46e5,color:#fff
+    style Consumption fill:#064e3b,stroke:#10b981,color:#fff
+                            </pre>
+                            <p class="text-center text-xs text-slate-500 mt-6 italic">Visualization of the hybrid cloud data flow and transformation layers.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -274,7 +266,7 @@ graph TD
                             <h3 class="text-2xl font-bold text-white group-hover:text-emerald-400 transition-colors">Carrot Insurance</h3>
                             <p class="text-slate-500 font-medium text-sm">Apr 2024 – Jul 2024</p>
                         </div>
-                        <p class="text-emerald-400 font-semibold">DW/BI Intern</p>
+                        <p class="text-emerald-400 font-semibold uppercase tracking-wider text-xs">DW/BI Intern | Seoul, Korea</p>
                     </div>
                     <div class="ml-4 chevron-icon text-slate-500">
                         <i data-lucide="chevron-down"></i>
@@ -283,7 +275,7 @@ graph TD
                 <div class="accordion-content px-8 pb-8">
                     <div class="border-t border-white/5 pt-6">
                         <ul class="space-y-3 text-slate-400 list-disc list-inside text-sm md:text-base">
-                            <li><b>Data Mart Design:</b> Developed Hive SQL-based data marts aligned with key business performance indicators (KPIs).</li>
+                            <li><b>Data Mart Design:</b> Developed Hive SQL-based data marts aligned with business performance indicators (KPIs).</li>
                             <li><b>Performance Migration:</b> Migrated legacy Tez-based workflows to <b>Spark</b>, reducing batch execution time from 2 hours to 30 minutes (75% improvement).</li>
                             <li><b>BI Automation:</b> Established automated refresh environments by connecting Power BI dashboards with on-premise data gateways.</li>
                         </ul>
@@ -339,36 +331,49 @@ graph TD
     <!-- Footer -->
     <footer class="py-12 border-t border-white/5 text-center text-slate-500 text-sm">
         <p>© 2026 Seongju Hwang. Data Engineer Portfolio.</p>
-        <p class="mt-2 text-xs uppercase tracking-widest">Focused on Scalable Data Infrastructure</p>
+        <p class="mt-2 text-xs uppercase tracking-widest">Scalable Data Architecture Specialist</p>
     </footer>
 
     <script>
         // Initialize Lucide Icons
         lucide.createIcons();
 
-        // Initialize Mermaid with safer config
+        // Initialize Mermaid
         mermaid.initialize({
-            startOnLoad: true,
+            startOnLoad: false,
             theme: 'dark',
+            fontFamily: 'Inter',
             securityLevel: 'loose',
             flowchart: { 
                 useMaxWidth: true, 
                 htmlLabels: true,
-                padding: 40,
-                rankSpacing: 50,
-                nodeSpacing: 50
+                curve: 'basis'
             }
+        });
+
+        // Run mermaid on load
+        window.addEventListener('load', () => {
+            mermaid.run();
         });
 
         // Accordion Toggle Function
         function toggleAccordion(element) {
             const allItems = document.querySelectorAll('.accordion-item');
+            const isActive = element.classList.contains('active');
+            
             allItems.forEach(item => {
-                if (item !== element) {
-                    item.classList.remove('active');
-                }
+                item.classList.remove('active');
             });
-            element.classList.toggle('active');
+
+            if (!isActive) {
+                element.classList.add('active');
+                // Re-run mermaid after animation finishes
+                setTimeout(() => {
+                    mermaid.run({
+                        nodes: element.querySelectorAll('.mermaid')
+                    });
+                }, 400);
+            }
         }
     </script>
 </body>
