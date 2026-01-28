@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio | Seongju Hwang | Data Engineer</title>
@@ -146,21 +147,21 @@
     </section>
 
     <!-- Stats Section -->
-    <section class="py-20 px-6 max-w-6xl mx-auto">
+    <section class="py-10 px-6 max-w-6xl mx-auto">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div class="p-6 glass-card rounded-2xl text-center">
+            <div class="p-6 glass-card rounded-2xl text-center" data-aos="fade-up" data-aos-delay="200">
                 <div class="text-3xl font-bold mb-1">100M+</div>
                 <div class="text-xs text-slate-400 uppercase tracking-widest">JDBC Ingestion</div>
             </div>
-            <div class="p-6 glass-card rounded-2xl text-center">
+            <div class="p-6 glass-card rounded-2xl text-center" data-aos="fade-up" data-aos-delay="200">
                 <div class="text-3xl font-bold mb-1">300+</div>
                 <div class="text-xs text-slate-400 uppercase tracking-widest">Oozie Workflows</div>
             </div>
-            <div class="p-6 glass-card rounded-2xl text-center">
+            <div class="p-6 glass-card rounded-2xl text-center" data-aos="fade-up" data-aos-delay="200">
                 <div class="text-3xl font-bold mb-1">1B+</div>
                 <div class="text-xs text-slate-400 uppercase tracking-widest">Daily Rows</div>
             </div>
-            <div class="p-6 glass-card rounded-2xl text-center">
+            <div class="p-6 glass-card rounded-2xl text-center" data-aos="fade-up" data-aos-delay="200">
                 <div class="text-3xl font-bold mb-1">~4h</div>
                 <div class="text-xs text-slate-400 uppercase tracking-widest">Latency Reduction</div>
             </div>
@@ -169,11 +170,11 @@
 
     <!-- Work Experience Section -->
     <section id="experience" class="py-24 px-6 max-w-6xl mx-auto">
-        <h2 class="text-3xl font-bold mb-12 text-center">Professional Experience</h2>
+        <h2 class="text-3xl font-bold mb-12 text-center" data-aos="fade-up" data-aos-delay="200">Professional Experience</h2>
         <div class="space-y-6">
             <!-- Experience 1: Hanwha -->
             <div class="accordion-item glass-card rounded-3xl cursor-pointer group active"
-                onclick="toggleAccordion(this)">
+                onclick="toggleAccordion(this)" data-aos="fade-up" data-aos-delay="400">
                 <div class="p-8 flex justify-between items-center">
                     <div class="flex-1">
                         <div class="flex flex-col md:flex-row md:items-center justify-between mb-1">
@@ -293,7 +294,7 @@ graph TD
 
             <!-- Experience 2: Carrot -->
             <div class="accordion-item glass-card rounded-3xl cursor-pointer group" onclick="toggleAccordion(this)">
-                <div class="p-8 flex justify-between items-center">
+                <div class="p-8 flex justify-between items-center" >
                     <div class="flex-1">
                         <div class="flex flex-col md:flex-row md:items-center justify-between mb-1">
                             <h3 class="text-2xl font-bold text-white group-hover:text-emerald-400 transition-colors">
@@ -467,6 +468,18 @@ graph TD
             </div>
         </div>
     </div>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script>
+        // AOS 초기화
+        AOS.init({
+            duration: 1000, 
+            once: false,    
+            offset: 120,    
+        });
+
+        // 기존에 작성했던 lucide 아이콘 생성 및 모달 함수들도 이 근처에 둡니다.
+        lucide.createIcons();
+    </script>    
 </body>
 
 </html>
