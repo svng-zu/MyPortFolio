@@ -105,9 +105,14 @@
             <a href="https://www.linkedin.com/in/alex-hwang1998/" target="_blank" class="hover:text-indigo-400 transition-colors">
                 <i data-lucide="linkedin"></i>
             </a>
-            <a href="https://github.com/svng-zu/MyPortFolio/blob/main/Resume.pdf" target="_blank" class="bg-indigo-600 hover:bg-indigo-500 px-4 py-2 rounded-full text-xs font-bold transition-all inline-block">
+            <!-- <a href="https://github.com/svng-zu/MyPortFolio/blob/main/Resume.pdf" target="_blank" class="bg-indigo-600 hover:bg-indigo-500 px-4 py-2 rounded-full text-xs font-bold transition-all inline-block">
                 Resume
-            </a>
+            </a> -->
+            <button class="...">Resume</button>
+            
+            <button onclick="toggleModal()" class="bg-indigo-600 hover:bg-indigo-500 px-4 py-2 rounded-full text-xs font-bold transition-all">
+                Resume
+            </button>            
         </div>
     </nav>
 
@@ -375,6 +380,52 @@ graph TD
                 }, 400);
             }
         }
+        function toggleModal() {
+            const modal = document.getElementById('resumeModal');
+            const isHidden = modal.classList.contains('hidden');
+            
+            if (isHidden) {
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden'; // 배경 스크롤 방지
+            } else {
+                modal.classList.add('hidden');
+                document.body.style.overflow = 'auto'; // 스크롤 복원
+            }
+        }
+        
+        // ESC 키를 누르면 모달이 닫히도록 설정
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('resumeModal');
+                if (!modal.classList.contains('hidden')) toggleModal();
+            }
+        });
     </script>
+    <div id="resumeModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-slate-950/80 backdrop-blur-sm" onclick="toggleModal()"></div>
+        
+        <div class="glass-card w-full max-w-5xl h-[90vh] rounded-3xl overflow-hidden relative z-10 flex flex-col border border-white/10">
+            <div class="p-4 border-b border-white/5 flex justify-between items-center bg-slate-900/50">
+                <h3 class="text-white font-bold ml-2">Seongju Hwang_Resume.pdf</h3>
+                <div class="flex items-center space-x-2">
+                    <a href="https://github.com/svng-zu/MyPortFolio/raw/main/Resume.pdf" 
+                       download 
+                       class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center">
+                        <i data-lucide="download" class="w-4 h-4 mr-2"></i> Download
+                    </a>
+                    <button onclick="toggleModal()" class="p-2 text-slate-400 hover:text-white transition-colors">
+                        <i data-lucide="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="flex-1 bg-slate-800">
+                <iframe 
+                    src="https://github.com/svng-zu/MyPortFolio/raw/main/Resume.pdf#toolbar=0" 
+                    class="w-full h-full border-none">
+                </iframe>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
