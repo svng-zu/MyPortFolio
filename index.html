@@ -2,484 +2,996 @@
 <html lang="en">
 
 <head>
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | Seongju Hwang | Data Engineer</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Mermaid for Architecture Diagram -->
-    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <title>Seongju Hwang — Data Engineer</title>
+    <meta name="description"
+        content="Seongju Hwang, data engineer at Hanwha General Insurance. Spark CDC ingestion, 300+ Oozie workflows, ~1B rows a day.">
+    <meta name="theme-color" content="#EDEFF1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        /* ---------- Tokens ---------- */
+        :root {
+            color-scheme: light;
+
+            /* reference */
+            --grey-50: #FFFFFF;
+            --grey-100: #EDEFF1;
+            --grey-300: #CBD0D6;
+            --grey-600: #58616B;
+            --grey-900: #15191E;
+            --cobalt-600: #1F56D6;
+            --cobalt-700: #1844AD;
+
+            /* semantic */
+            --color-bg: var(--grey-100);
+            --color-surface: var(--grey-50);
+            --color-text: var(--grey-900);
+            --color-text-muted: var(--grey-600);
+            --color-rule: var(--grey-300);
+            --color-flow: var(--cobalt-600);
+            --color-action: var(--cobalt-600);
+            --color-action-hover: var(--cobalt-700);
+
+            --font-sans: 'Schibsted Grotesk', ui-sans-serif, system-ui, -apple-system, 'Apple SD Gothic Neo', sans-serif;
+
+            --text-sm: 0.875rem;
+            --text-base: 1.0625rem;
+            --text-lg: 1.25rem;
+            --text-xl: 1.625rem;
+            --text-display: clamp(3rem, 9vw, 7.5rem);
+
+            --space-1: 4px;
+            --space-2: 8px;
+            --space-3: 12px;
+            --space-4: 16px;
+            --space-6: 24px;
+            --space-8: 32px;
+            --space-12: 48px;
+            --space-16: 64px;
+            --space-24: 96px;
+
+            --radius-sm: 6px;
+            --radius-md: 10px;
+
+            --header-h: 64px;
+            --content-max: 1160px;
+            --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        /* ---------- Base ---------- */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+        }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0f172a;
-            color: #f1f5f9;
-            scroll-behavior: smooth;
+            margin: 0;
+            font-family: var(--font-sans);
+            font-size: var(--text-base);
+            line-height: 1.55;
+            color: var(--color-text);
+            background: var(--color-bg);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .glass-card {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
+        h1,
+        h2,
+        h3,
+        h4,
+        p,
+        ul,
+        dl,
+        dd,
+        figure {
+            margin: 0;
         }
 
-        .glass-card:hover {
-            border-color: #6366f1;
-            box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.3);
+        ul {
+            padding: 0;
+            list-style: none;
         }
 
-        .gradient-text {
-            background: linear-gradient(90deg, #818cf8, #c084fc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        h1,
+        h2,
+        h3 {
+            text-wrap: balance;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--color-action);
+            outline-offset: 3px;
+            border-radius: 2px;
+        }
+
+        .wrap {
+            max-width: var(--content-max);
+            margin-inline: auto;
+            padding-inline: var(--space-6);
+        }
+
+        .skip-link {
+            position: absolute;
+            left: var(--space-4);
+            top: -100px;
+            z-index: 30;
+            padding: var(--space-2) var(--space-4);
+            background: var(--color-text);
+            color: var(--color-surface);
+            border-radius: var(--radius-sm);
+        }
+
+        .skip-link:focus {
+            top: var(--space-4);
+        }
+
+        section[id] {
+            scroll-margin-top: calc(var(--header-h) + var(--space-4));
+        }
+
+        /* ---------- Header ---------- */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: var(--color-bg);
+            border-bottom: 1px solid var(--color-rule);
+        }
+
+        .site-header .wrap {
+            height: var(--header-h);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--space-4);
+        }
+
+        .site-name {
+            white-space: nowrap;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: -0.01em;
+        }
+
+        .site-nav {
+            display: flex;
+            align-items: center;
+            gap: var(--space-1);
         }
 
         .nav-link {
-            transition: color 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            min-height: 44px;
+            padding-inline: var(--space-3);
+            font-size: var(--text-sm);
+            font-weight: 500;
+            text-decoration: none;
+            color: var(--color-text-muted);
+            transition: color 150ms ease;
         }
 
-        .nav-link:hover {
-            color: #818cf8;
+        .icon-link {
+            display: inline-grid;
+            place-items: center;
+            width: 44px;
+            height: 44px;
+            color: var(--color-text-muted);
+            transition: color 150ms ease;
         }
 
-        /* Accordion transition logic */
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
-            opacity: 0;
+        .icon-link svg {
+            width: 20px;
+            height: 20px;
         }
 
-        .accordion-item.active .accordion-content {
-            max-height: 3000px;
-            opacity: 1;
-            margin-top: 1.5rem;
-        }
-
-        .chevron-icon {
-            transition: transform 0.3s ease;
-        }
-
-        .accordion-item.active .chevron-icon {
-            transform: rotate(180deg);
-        }
-
-        /* Mermaid Styling */
-        .mermaid {
-            background: transparent !important;
-            display: flex;
+        .btn {
+            display: inline-flex;
+            align-items: center;
             justify-content: center;
-            min-height: 400px;
+            gap: var(--space-2);
+            min-height: 44px;
+            padding-inline: var(--space-4);
+            font: inherit;
+            font-size: var(--text-sm);
+            font-weight: 600;
+            border-radius: var(--radius-sm);
+            border: 1px solid transparent;
+            white-space: nowrap;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 150ms ease, border-color 150ms ease, transform 100ms ease;
+        }
+
+        .btn:active {
+            transform: scale(0.97);
+        }
+
+        .btn-primary {
+            background: var(--color-action);
+            color: #fff;
+        }
+
+        .btn-secondary {
+            background: var(--color-surface);
+            color: var(--color-text);
+            border-color: var(--color-rule);
+        }
+
+        @media (hover: hover) {
+
+            .nav-link:hover,
+            .icon-link:hover {
+                color: var(--color-text);
+            }
+
+            .btn-primary:hover {
+                background: var(--color-action-hover);
+            }
+
+            .btn-secondary:hover {
+                border-color: var(--color-text-muted);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .nav-link.optional,
+            .optional-word {
+                display: none;
+            }
+
+            .btn-primary[data-open-resume] {
+                text-transform: capitalize;
+            }
+        }
+
+        /* ---------- Hero ---------- */
+        .hero {
+            padding-block: var(--space-16) var(--space-12);
+        }
+
+        .hero-name {
+            font-size: var(--text-display);
+            font-weight: 800;
+            line-height: 0.92;
+            letter-spacing: -0.045em;
+        }
+
+        .hero-intro {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            gap: var(--space-6);
+            margin-top: var(--space-8);
+        }
+
+        .hero-lede {
+            max-width: 34ch;
+            font-size: var(--text-xl);
+            line-height: 1.35;
+            letter-spacing: -0.01em;
+        }
+
+        .hero-facts {
+            font-size: var(--text-base);
+            color: var(--color-text-muted);
+            max-width: 52ch;
+        }
+
+        @media (min-width: 900px) {
+            .hero-intro {
+                grid-template-columns: 1.2fr 1fr;
+                align-items: end;
+                gap: var(--space-12);
+            }
+        }
+
+        /* ---------- Pipeline flow (signature element) ---------- */
+        .flow-figure {
+            margin-top: var(--space-12);
+            padding: var(--space-6);
+            background: var(--color-surface);
+            border: 1px solid var(--color-rule);
+            border-radius: var(--radius-md);
+        }
+
+        .flow {
+            display: grid;
+            gap: 0 var(--space-3);
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+            grid-template-areas:
+                "s1 s2"
+                "c1 c3"
+                "p1 p2"
+                "c2 c4"
+                "lake lake"
+                "c5 c5"
+                "use use";
+        }
+
+        .flow-head {
+            display: none;
+            font-size: var(--text-sm);
+            color: var(--color-text-muted);
+            padding-bottom: var(--space-3);
+        }
+
+        .node {
+            padding: var(--space-3) var(--space-4);
+            border: 1px solid var(--color-rule);
+            border-radius: var(--radius-sm);
+            background: var(--color-surface);
+            min-width: 0;
+        }
+
+        .node-name {
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .node-detail {
+            margin-top: 2px;
+            font-size: var(--text-sm);
+            color: var(--color-text-muted);
+            line-height: 1.4;
+        }
+
+        .node-lake {
+            border-color: var(--color-text);
+            border-width: 1.5px;
+        }
+
+        .node-use ul {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-1) var(--space-4);
+            margin-top: 2px;
+        }
+
+        .conn {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            min-height: 64px;
+            padding: var(--space-2) 0 var(--space-2) var(--space-4);
+            font-size: var(--text-sm);
+            line-height: 1.3;
+            color: var(--color-text-muted);
+        }
+
+        .conn strong {
+            display: block;
+            color: var(--color-text);
+            font-weight: 600;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .conn-line {
+            position: relative;
+            flex: none;
+            width: 2px;
+            align-self: stretch;
+            margin-bottom: 4px;
+            background: var(--color-flow);
+            transform-origin: top center;
+        }
+
+        .conn-line::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: -6px;
+            translate: -50% 0;
+            border: 5px solid transparent;
+            border-top: 7px solid var(--color-flow);
+            border-bottom: 0;
+        }
+
+        .conn-quiet {
+            min-height: 40px;
+        }
+
+        @media (min-width: 900px) {
+            .flow-figure {
+                padding: var(--space-8);
+            }
+
+            .flow {
+                gap: var(--space-3) 0;
+                grid-template-columns: minmax(0, 1fr) 132px minmax(0, 1fr) 96px minmax(0, 1fr) 72px minmax(0, 0.9fr);
+                grid-template-areas:
+                    "h1 . h2 . h3 . h4"
+                    "s1 c1 p1 c2 lake c5 use"
+                    "s2 c3 p2 c4 lake c5 use";
+            }
+
+            .flow-head {
+                display: block;
+            }
+
+            .node-lake,
+            .node-use {
+                align-self: center;
+            }
+
+            .node-use ul {
+                flex-direction: column;
+            }
+
+            .conn {
+                display: grid;
+                grid-template-rows: 1fr auto 1fr;
+                gap: var(--space-2);
+                min-height: 0;
+                padding: 0 var(--space-3);
+            }
+
+            .conn-label {
+                grid-row: 1;
+                align-self: end;
+            }
+
+            .conn-line {
+                grid-row: 2;
+            }
+
+            .conn-line {
+                width: auto;
+                height: 2px;
+                align-self: stretch;
+                margin: 0 6px 0 0;
+                transform-origin: left center;
+            }
+
+            .conn-line::after {
+                left: auto;
+                right: -7px;
+                bottom: auto;
+                top: 50%;
+                translate: 0 -50%;
+                border: 5px solid transparent;
+                border-left: 7px solid var(--color-flow);
+                border-right: 0;
+            }
+        }
+
+        .flow-caption {
+            margin-top: var(--space-6);
+            font-size: var(--text-sm);
+            color: var(--color-text-muted);
+        }
+
+        /* One orchestrated moment: lines draw in flow order on first load. */
+        @media (prefers-reduced-motion: no-preference) {
+            .js .conn-line {
+                transform: scale(0);
+                transition: transform 520ms var(--ease-out);
+                transition-delay: calc(var(--step) * 140ms + 200ms);
+            }
+
+            @media (min-width: 900px) {
+                .js .conn-line {
+                    transform: scaleX(0);
+                }
+            }
+
+            @media (max-width: 899px) {
+                .js .conn-line {
+                    transform: scaleY(0);
+                }
+            }
+
+            .js .flow.is-drawn .conn-line {
+                transform: none;
+            }
+        }
+
+        /* ---------- Sections ---------- */
+        .section {
+            padding-block: var(--space-16);
+            border-top: 1px solid var(--color-rule);
+        }
+
+        .section-title {
+            font-size: var(--text-xl);
+            font-weight: 700;
+            letter-spacing: -0.015em;
+            margin-bottom: var(--space-8);
+        }
+
+        /* Experience */
+        .role {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            gap: var(--space-2) var(--space-12);
+        }
+
+        .role+.role {
+            margin-top: var(--space-12);
+            padding-top: var(--space-12);
+            border-top: 1px solid var(--color-rule);
+        }
+
+        .role-meta {
+            font-size: var(--text-sm);
+            color: var(--color-text-muted);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .role-dates {
+            color: var(--color-text);
+            font-weight: 500;
+        }
+
+        .role-company {
+            font-size: var(--text-lg);
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+
+        .role-title {
+            color: var(--color-text-muted);
+        }
+
+        .role-group {
+            margin-top: var(--space-6);
+            max-width: 68ch;
+        }
+
+        .role-group h4 {
+            font-size: var(--text-base);
+            font-weight: 600;
+            margin-bottom: var(--space-2);
+        }
+
+        .role-group li {
+            position: relative;
+            padding-left: var(--space-6);
+            color: var(--color-text-muted);
+        }
+
+        .role-group li+li {
+            margin-top: var(--space-2);
+        }
+
+        .role-group li::before {
+            content: "";
+            position: absolute;
+            left: 2px;
+            top: 0.75em;
+            width: 10px;
+            height: 2px;
+            background: var(--color-rule);
+        }
+
+        .role-group b {
+            color: var(--color-text);
+            font-weight: 600;
+        }
+
+        @media (min-width: 900px) {
+            .role {
+                grid-template-columns: 200px minmax(0, 1fr);
+            }
+
+            .role-meta {
+                padding-top: 6px;
+            }
+        }
+
+        /* Skills */
+        .skills {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--space-8) var(--space-6);
+        }
+
+        .skill-group {
+            padding-top: var(--space-3);
+            border-top: 2px solid var(--color-text);
+        }
+
+        .skill-group h3 {
+            font-size: var(--text-base);
+            font-weight: 600;
+            margin-bottom: var(--space-2);
+        }
+
+        .skill-group li {
+            color: var(--color-text-muted);
+        }
+
+        /* Footer */
+        .site-footer {
+            padding-block: var(--space-8);
+            border-top: 1px solid var(--color-rule);
+            font-size: var(--text-sm);
+            color: var(--color-text-muted);
+        }
+
+        .site-footer .wrap {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: var(--space-4);
+        }
+
+        .site-footer a {
+            text-underline-offset: 3px;
+        }
+
+        /* ---------- Resume dialog ---------- */
+        .resume-dialog {
+            width: min(1000px, calc(100vw - 32px));
+            height: min(92vh, 1200px);
+            padding: 0;
+            border: 1px solid var(--color-rule);
+            border-radius: var(--radius-md);
+            background: var(--color-surface);
+            color: var(--color-text);
+            overflow: hidden;
+            overscroll-behavior: contain;
+        }
+
+        .resume-dialog[open] {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .resume-dialog::backdrop {
+            background: rgba(21, 25, 30, 0.55);
+        }
+
+        @media (prefers-reduced-motion: no-preference) {
+            .resume-dialog[open] {
+                animation: dialog-in 180ms var(--ease-out);
+            }
+
+            @keyframes dialog-in {
+                from {
+                    opacity: 0;
+                    transform: scale(0.97);
+                }
+            }
+        }
+
+        .dialog-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--space-3);
+            padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4);
+            border-bottom: 1px solid var(--color-rule);
+        }
+
+        .dialog-title {
+            font-size: var(--text-sm);
+            font-weight: 600;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .dialog-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .icon-btn {
+            display: inline-grid;
+            place-items: center;
+            width: 44px;
+            height: 44px;
+            border: 0;
+            border-radius: var(--radius-sm);
+            background: transparent;
+            color: var(--color-text-muted);
+            cursor: pointer;
+        }
+
+        @media (hover: hover) {
+            .icon-btn:hover {
+                color: var(--color-text);
+                background: var(--color-bg);
+            }
+        }
+
+        .resume-frame {
+            flex: 1;
             width: 100%;
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #0f172a;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #334155;
-            border-radius: 10px;
+            border: 0;
+            background: var(--color-bg);
         }
     </style>
 </head>
 
 <body>
+    <a class="skip-link" href="#main">Skip to content</a>
 
-    <!-- Navigation -->
-    <nav class="fixed w-full z-50 px-6 py-4 flex justify-between items-center glass-card border-none bg-opacity-90">
-        <div class="text-2xl font-bold gradient-text">SH.</div>
-        <div class="hidden md:flex space-x-8 text-sm font-medium">
-            <a href="#home" class="nav-link">Home</a>
-            <a href="#experience" class="nav-link">Experience</a>
-            <a href="#skills" class="nav-link">Skills</a>
+    <header class="site-header">
+        <div class="wrap">
+            <a class="site-name" href="#top">Seongju Hwang</a>
+            <nav class="site-nav" aria-label="Primary">
+                <a class="nav-link optional" href="#experience">Experience</a>
+                <a class="nav-link optional" href="#skills">Skills</a>
+                <a class="icon-link" href="https://github.com/svng-zu" target="_blank" rel="noopener"
+                    aria-label="GitHub profile">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path
+                            d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.25.45-2.28 1.18-3.08-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.58.23 2.75.11 3.04.74.8 1.18 1.83 1.18 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z" />
+                    </svg>
+                </a>
+                <a class="icon-link" href="https://www.linkedin.com/in/alex-hwang1998/" target="_blank" rel="noopener"
+                    aria-label="LinkedIn profile">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path
+                            d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z" />
+                    </svg>
+                </a>
+                <button class="btn btn-primary" type="button" data-open-resume><span class="optional-word">View </span>resume</button>
+            </nav>
         </div>
-        <div class="flex items-center space-x-4">
-            <a href="https://github.com/svng-zu" target="_blank" class="hover:text-indigo-400 transition-colors">
-                <i data-lucide="github"></i>
-            </a>
-            <a href="https://www.linkedin.com/in/alex-hwang1998/" target="_blank"
-                class="hover:text-indigo-400 transition-colors">
-                <i data-lucide="linkedin"></i>
-            </a>
-            <!-- <a href="https://github.com/svng-zu/MyPortFolio/blob/main/Resume.pdf" target="_blank" class="bg-indigo-600 hover:bg-indigo-500 px-4 py-2 rounded-full text-xs font-bold transition-all inline-block">
-                Resume
-            </a> -->
-            <button onclick="toggleModal()"
-                class="bg-indigo-600 hover:bg-indigo-500 px-4 py-2 rounded-full text-xs font-bold transition-all">
-                Resume
-            </button>
-        </div>
-    </nav>
+    </header>
 
-    <!-- Hero Section -->
-    <section id="home" class="min-h-screen flex flex-col justify-center items-center pt-20 px-6 text-center">
-        <div
-            class="inline-block px-4 py-1.5 mb-6 text-xs font-semibold tracking-widest text-indigo-400 uppercase bg-indigo-500/10 rounded-full">
-            Specializing in Large-Scale Spark Processing
-        </div>
-        <h1 class="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
-            Seongju <span class="gradient-text">Hwang</span>
-        </h1>
-        <p class="max-w-2xl text-slate-400 text-lg md:text-xl mb-10">
-            <b>Data Engineer</b> leading hybrid cloud analytics. <br class="hidden md:block">
-            Managing 300+ Spark pipelines processing <b>1B+ rows daily</b> with <b>Spark JDBC & DataFrames</b>.
-        </p>
-        <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
-            <a href="#experience"
-                class="px-8 py-4 bg-indigo-600 hover:bg-indigo-500 rounded-xl font-bold transition-all flex items-center justify-center">
-                View Experience <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
-            </a>
-            <a href="#skills"
-                class="px-8 py-4 glass-card rounded-xl font-bold hover:bg-slate-800 transition-all flex items-center justify-center">
-                Technical Stack
-            </a>
-        </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="py-10 px-6 max-w-6xl mx-auto">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div class="p-6 glass-card rounded-2xl text-center" data-aos="fade-up" data-aos-delay="200">
-                <div class="text-3xl font-bold mb-1">100M+</div>
-                <div class="text-xs text-slate-400 uppercase tracking-widest">JDBC Ingestion</div>
-            </div>
-            <div class="p-6 glass-card rounded-2xl text-center" data-aos="fade-up" data-aos-delay="200">
-                <div class="text-3xl font-bold mb-1">300+</div>
-                <div class="text-xs text-slate-400 uppercase tracking-widest">Oozie Workflows</div>
-            </div>
-            <div class="p-6 glass-card rounded-2xl text-center" data-aos="fade-up" data-aos-delay="200">
-                <div class="text-3xl font-bold mb-1">1B+</div>
-                <div class="text-xs text-slate-400 uppercase tracking-widest">Daily Rows</div>
-            </div>
-            <div class="p-6 glass-card rounded-2xl text-center" data-aos="fade-up" data-aos-delay="200">
-                <div class="text-3xl font-bold mb-1">~4h</div>
-                <div class="text-xs text-slate-400 uppercase tracking-widest">Latency Reduction</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Work Experience Section -->
-    <section id="experience" class="py-24 px-6 max-w-6xl mx-auto">
-        <h2 class="text-3xl font-bold mb-12 text-center" data-aos="fade-up" data-aos-delay="200">Professional Experience</h2>
-        <div class="space-y-6">
-            <!-- Experience 1: Hanwha -->
-            <div class="accordion-item glass-card rounded-3xl cursor-pointer group active"
-                onclick="toggleAccordion(this)" data-aos="fade-up" data-aos-delay="400">
-                <div class="p-8 flex justify-between items-center">
-                    <div class="flex-1">
-                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-1">
-                            <h3 class="text-2xl font-bold text-white group-hover:text-indigo-400 transition-colors">
-                                Hanwha General Insurance</h3>
-                            <p class="text-slate-500 font-medium text-sm">Jul 2024 – Present</p>
-                        </div>
-                        <p class="text-indigo-400 font-semibold uppercase tracking-wider text-xs">Data Engineer | Seoul,
-                            Korea</p>
-                    </div>
-                    <div class="ml-4 chevron-icon text-slate-500">
-                        <i data-lucide="chevron-down"></i>
-                    </div>
+    <main id="main">
+        <!-- Hero -->
+        <section class="hero" id="top">
+            <div class="wrap">
+                <h1 class="hero-name">Seongju<br>Hwang</h1>
+                <div class="hero-intro">
+                    <p class="hero-lede">Data engineer at Hanwha General Insurance, running the Spark pipelines that
+                        move about a billion rows a day into the analytics lake.</p>
+                    <p class="hero-facts">300+ Oozie workflows, CDC ingestion from MySQL and Tibero over Spark JDBC,
+                        and streaming events from 700K IoT devices. Moving CDC off Sqoop cut end-to-end
+                        latency from 7 hours to 3.</p>
                 </div>
-                <div class="accordion-content px-8 pb-8">
-                    <div class="border-t border-white/5 pt-6">
-                        <!-- Key Responsibilities (Vertical Layout for readability) -->
-                        <div class="flex flex-col space-y-8 mb-10">
-                            <!-- Platform & Pipeline Section -->
-                            <div>
-                                <h4 class="text-white font-bold mb-4 flex items-center text-lg">
-                                    <i data-lucide="server" class="w-5 h-5 mr-2 text-indigo-400"></i> Platform &
-                                    Pipeline
-                                </h4>
-                                <ul class="space-y-3 text-slate-400 text-sm md:text-base ml-1">
-                                    <li class="flex items-start"><span class="text-indigo-500 mr-3 mt-1">•</span>
-                                        <span><b>Large-Scale Ingestion:</b> Built parallel extraction pipelines using
-                                            <b>Spark JDBC</b> to ingest 100M+ rows from MySQL/Tibero into Azure
-                                            HDFS.</span></li>
-                                    <li class="flex items-start"><span class="text-indigo-500 mr-3 mt-1">•</span>
-                                        <span><b>Workflow Mgmt:</b> Designed and maintained <b>300+ Oozie workflows</b>
-                                            processing ~1B rows/day with robust retry and failure isolation.</span></li>
-                                    <li class="flex items-start"><span class="text-indigo-500 mr-3 mt-1">•</span>
-                                        <span><b>Optimization:</b> Migrated Sqoop-based CDC to Spark JDBC, reducing
-                                            end-to-end latency from <b>7h to 3h</b>.</span></li>
-                                    <li class="flex items-start"><span class="text-indigo-500 mr-3 mt-1">•</span>
-                                        <span><b>Platform Ops:</b> Managed Azure HDInsight-based Spark/Hive platforms
-                                            with YARN-level resource tuning.</span></li>
-                                </ul>
-                            </div>
 
-                            <!-- Real-time & BI Section -->
-                            <div>
-                                <h4 class="text-white font-bold mb-4 flex items-center text-lg">
-                                    <i data-lucide="zap" class="w-5 h-5 mr-2 text-indigo-400"></i> Real-time & BI
-                                </h4>
-                                <ul class="space-y-3 text-slate-400 text-sm md:text-base ml-1">
-                                    <li class="flex items-start"><span class="text-indigo-500 mr-3 mt-1">•</span>
-                                        <span><b>IoT Streaming:</b> Developed Spark Structured Streaming pipelines
-                                            ingesting <b>100K events/sec</b> from 700K devices via Kafka.</span></li>
-                                    <li class="flex items-start"><span class="text-indigo-500 mr-3 mt-1">•</span>
-                                        <span><b>BI Infrastructure:</b> Built end-to-end Power BI infra, including
-                                            on-prem gateway and security coordination.</span></li>
-                                    <li class="flex items-start"><span class="text-indigo-500 mr-3 mt-1">•</span>
-                                        <span><b>Modern Stack:</b> Led PoCs for <b>Apache Superset</b> and
-                                            <b>Databricks</b> to modernize the analytical ecosystem.</span></li>
-                                </ul>
-                            </div>
+                <figure class="flow-figure">
+                    <div class="flow" id="flow">
+                        <p class="flow-head" style="grid-area:h1">Sources</p>
+                        <p class="flow-head" style="grid-area:h2">Processing</p>
+                        <p class="flow-head" style="grid-area:h3">Lake</p>
+                        <p class="flow-head" style="grid-area:h4">Serving</p>
+
+                        <div class="node" style="grid-area:s1">
+                            <p class="node-name">MySQL, Tibero</p>
+                            <p class="node-detail">Core insurance databases</p>
+                        </div>
+                        <div class="conn" style="grid-area:c1">
+                            <span class="conn-line" style="--step:0" aria-hidden="true"></span>
+                            <span class="conn-label"><strong>100M+ rows</strong>CDC via Spark JDBC</span>
+                        </div>
+                        <div class="node" style="grid-area:p1">
+                            <p class="node-name">Spark batch</p>
+                            <p class="node-detail">DataFrame transforms, 300+ Oozie workflows</p>
+                        </div>
+                        <div class="conn" style="grid-area:c2">
+                            <span class="conn-line" style="--step:1" aria-hidden="true"></span>
+                            <span class="conn-label"><strong>~1B rows</strong>per day</span>
                         </div>
 
-                        <!-- Technical Architecture Diagram -->
-                        <div class="bg-slate-900/60 rounded-2xl p-6 border border-white/5 overflow-x-auto">
-                            <h4 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-8 text-center">
-                                Technical Architecture: Hanwha Data Platform</h4>
-                            <pre class="mermaid">
-graph TD
-    subgraph Sources [Data Sources]
-        direction LR
-        MySQL[(MySQL)]
-        Tibero[(Tibero)]
-        IoT[700K IoT Devices]
-    end
+                        <div class="node" style="grid-area:s2">
+                            <p class="node-name">700K IoT devices</p>
+                            <p class="node-detail">Telematics events</p>
+                        </div>
+                        <div class="conn" style="grid-area:c3">
+                            <span class="conn-line" style="--step:0" aria-hidden="true"></span>
+                            <span class="conn-label"><strong>100K events/s</strong>through Kafka</span>
+                        </div>
+                        <div class="node" style="grid-area:p2">
+                            <p class="node-name">Structured Streaming</p>
+                            <p class="node-detail">Spark on YARN</p>
+                        </div>
+                        <div class="conn conn-quiet" style="grid-area:c4">
+                            <span class="conn-line" style="--step:1" aria-hidden="true"></span>
+                            <span class="conn-label">Micro-batches</span>
+                        </div>
 
-    subgraph Compute [Spark Processing Engine]
-        direction TB
-        Kafka[Kafka Cluster]
-        JDBC[Spark JDBC Ingestion]
-        DF[Spark DataFrame Transform]
-        SSS[Structured Streaming]
-        
-        JDBC --> DF
-        Kafka --> SSS
-    end
-
-    subgraph Storage [Azure HDInsight Lake]
-        HDFS[Azure HDFS]
-        Hive[Hive Metastore]
-        HDFS --- Hive
-    end
-
-    subgraph Consumption [Analytics Layer]
-        JH[Jupyter Hub]
-        PB[Power BI]
-        SS[Apache Superset]
-    end
-
-    MySQL --> JDBC
-    Tibero --> JDBC
-    IoT --> Kafka
-    DF --> HDFS
-    SSS --> HDFS
-    HDFS --> JH
-    HDFS --> PB
-    HDFS --> SS
-
-    style Sources fill:#1e293b,stroke:#475569,color:#fff
-    style Compute fill:#312e81,stroke:#818cf8,color:#fff
-    style Storage fill:#0f172a,stroke:#4f46e5,color:#fff
-    style Consumption fill:#064e3b,stroke:#10b981,color:#fff
-                            </pre>
-                            <p class="text-center text-xs text-slate-500 mt-6 italic">Visualization of the hybrid cloud
-                                data flow and transformation layers.</p>
+                        <div class="node node-lake" style="grid-area:lake">
+                            <p class="node-name">Azure HDInsight</p>
+                            <p class="node-detail">HDFS with Hive Metastore</p>
+                        </div>
+                        <div class="conn conn-quiet" style="grid-area:c5">
+                            <span class="conn-line" style="--step:2" aria-hidden="true"></span>
+                            <span class="conn-label">Serve</span>
+                        </div>
+                        <div class="node node-use" style="grid-area:use">
+                            <p class="node-detail">Consumed in</p>
+                            <ul class="node-name">
+                                <li>Power BI</li>
+                                <li>Apache Superset</li>
+                                <li>JupyterHub</li>
+                            </ul>
                         </div>
                     </div>
-                </div>
+                    <figcaption class="flow-caption">How data moves through the Hanwha data platform: batch CDC on top,
+                        streaming telemetry below, both landing in one Hive-managed lake.</figcaption>
+                </figure>
             </div>
+        </section>
 
-            <!-- Experience 2: Carrot -->
-            <div class="accordion-item glass-card rounded-3xl cursor-pointer group" onclick="toggleAccordion(this)">
-                <div class="p-8 flex justify-between items-center" >
-                    <div class="flex-1">
-                        <div class="flex flex-col md:flex-row md:items-center justify-between mb-1">
-                            <h3 class="text-2xl font-bold text-white group-hover:text-emerald-400 transition-colors">
-                                Carrot Insurance</h3>
-                            <p class="text-slate-500 font-medium text-sm">Apr 2024 – Jul 2024</p>
+        <!-- Experience -->
+        <section class="section" id="experience" aria-labelledby="experience-title">
+            <div class="wrap">
+                <h2 class="section-title" id="experience-title">Experience</h2>
+
+                <article class="role">
+                    <div class="role-meta">
+                        <p class="role-dates">Jul 2024 – Present</p>
+                        <p>Seoul, Korea</p>
+                    </div>
+                    <div>
+                        <h3 class="role-company">Hanwha General Insurance</h3>
+                        <p class="role-title">Data Engineer</p>
+
+                        <div class="role-group">
+                            <h4>Platform &amp; pipelines</h4>
+                            <ul>
+                                <li><b>Large-scale ingestion.</b> Built parallel extraction pipelines on Spark JDBC
+                                    that ingest 100M+ rows from MySQL and Tibero into Azure HDFS.</li>
+                                <li><b>Workflow management.</b> Designed and maintain 300+ Oozie workflows processing
+                                    ~1B rows a day, with retries and failure isolation.</li>
+                                <li><b>Latency.</b> Migrated Sqoop-based CDC to Spark JDBC, cutting end-to-end
+                                    latency from 7h to 3h.</li>
+                                <li><b>Platform operations.</b> Run the Azure HDInsight Spark and Hive platform,
+                                    including YARN-level resource tuning.</li>
+                            </ul>
                         </div>
-                        <p class="text-emerald-400 font-semibold uppercase tracking-wider text-xs">DW/BI Intern | Seoul,
-                            Korea</p>
+
+                        <div class="role-group">
+                            <h4>Streaming &amp; BI</h4>
+                            <ul>
+                                <li><b>IoT streaming.</b> Developed Spark Structured Streaming pipelines ingesting
+                                    100K events/sec from 700K devices via Kafka.</li>
+                                <li><b>BI infrastructure.</b> Built the end-to-end Power BI setup, including the
+                                    on-prem gateway and security coordination.</li>
+                                <li><b>Modern stack.</b> Led PoCs for Apache Superset and Databricks to modernize the
+                                    analytics stack.</li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="ml-4 chevron-icon text-slate-500">
-                        <i data-lucide="chevron-down"></i>
+                </article>
+
+                <article class="role">
+                    <div class="role-meta">
+                        <p class="role-dates">Apr 2024 – Jul 2024</p>
+                        <p>Seoul, Korea</p>
                     </div>
-                </div>
-                <div class="accordion-content px-8 pb-8">
-                    <div class="border-t border-white/5 pt-6">
-                        <ul class="space-y-3 text-slate-400 list-disc list-inside text-sm md:text-base">
-                            <li><b>Data Mart Design:</b> Developed Hive SQL-based data marts aligned with business
-                                performance indicators (KPIs).</li>
-                            <li><b>Performance Migration:</b> Migrated legacy Tez-based workflows to <b>Spark</b>,
-                                reducing batch execution time from 2 hours to 30 minutes (75% improvement).</li>
-                            <li><b>BI Automation:</b> Established automated refresh environments by connecting Power BI
-                                dashboards with on-premise data gateways.</li>
+                    <div>
+                        <h3 class="role-company">Carrot Insurance</h3>
+                        <p class="role-title">DW/BI Intern</p>
+                        <div class="role-group">
+                            <ul>
+                                <li><b>Data marts.</b> Developed Hive SQL data marts aligned with business KPIs.</li>
+                                <li><b>Tez to Spark.</b> Migrated legacy Tez workflows to Spark, cutting batch time
+                                    from 2 hours to 30 minutes.</li>
+                                <li><b>BI automation.</b> Set up automated refreshes by connecting Power BI
+                                    dashboards to on-premise data gateways.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Skills -->
+        <section class="section" id="skills" aria-labelledby="skills-title">
+            <div class="wrap">
+                <h2 class="section-title" id="skills-title">Skills</h2>
+                <div class="skills">
+                    <div class="skill-group">
+                        <h3>Languages</h3>
+                        <ul>
+                            <li>Python</li>
+                            <li>SQL (Hive, Spark, Oracle)</li>
+                        </ul>
+                    </div>
+                    <div class="skill-group">
+                        <h3>Spark</h3>
+                        <ul>
+                            <li>JDBC ingestion</li>
+                            <li>DataFrame optimization</li>
+                            <li>Structured Streaming</li>
+                            <li>YARN and Spark tuning</li>
+                        </ul>
+                    </div>
+                    <div class="skill-group">
+                        <h3>Platforms</h3>
+                        <ul>
+                            <li>Azure HDInsight</li>
+                            <li>Airflow &amp; Oozie</li>
+                            <li>HDFS, Hive Metastore</li>
+                            <li>Databricks (PoC)</li>
+                        </ul>
+                    </div>
+                    <div class="skill-group">
+                        <h3>Data stores</h3>
+                        <ul>
+                            <li>MySQL, Tibero</li>
+                            <li>PostgreSQL</li>
+                            <li>Kafka</li>
+                        </ul>
+                    </div>
+                    <div class="skill-group">
+                        <h3>Analytics</h3>
+                        <ul>
+                            <li>Power BI</li>
+                            <li>Apache Superset</li>
+                            <li>JupyterHub</li>
                         </ul>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <!-- Skills Section -->
-    <section id="skills" class="py-24 bg-slate-900/50">
-        <div class="max-w-6xl mx-auto px-6">
-            <h2 class="text-3xl font-bold mb-12 text-center">Technical Skills</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="p-6 glass-card rounded-2xl border-t-2 border-indigo-500">
-                    <h4 class="text-lg font-bold mb-4 text-white">Advanced Spark</h4>
-                    <ul class="text-slate-400 space-y-2 text-sm">
-                        <li>Spark JDBC Ingestion</li>
-                        <li>DataFrame API Optimization</li>
-                        <li>Structured Streaming</li>
-                        <li>YARN / Spark Tuning</li>
-                    </ul>
-                </div>
-                <div class="p-6 glass-card rounded-2xl border-t-2 border-purple-500">
-                    <h4 class="text-lg font-bold mb-4 text-white">Platforms</h4>
-                    <ul class="text-slate-400 space-y-2 text-sm">
-                        <li>Azure HDInsight</li>
-                        <li>Airflow & Oozie</li>
-                        <li>HDFS / Hive Metastore</li>
-                        <li>Databricks (PoC)</li>
-                    </ul>
-                </div>
-                <div class="p-6 glass-card rounded-2xl border-t-2 border-emerald-500">
-                    <h4 class="text-lg font-bold mb-4 text-white">Databases</h4>
-                    <ul class="text-slate-400 space-y-2 text-sm">
-                        <li>MySQL & Tibero</li>
-                        <li>PostgreSQL</li>
-                        <li>Kafka (Pub/Sub)</li>
-                    </ul>
-                </div>
-                <div class="p-6 glass-card rounded-2xl border-t-2 border-orange-500">
-                    <h4 class="text-lg font-bold mb-4 text-white">Visualization</h4>
-                    <ul class="text-slate-400 space-y-2 text-sm">
-                        <li>Power BI (Expert)</li>
-                        <li>Jupyter Hub</li>
-                        <li>Apache Superset</li>
-                    </ul>
-                </div>
-            </div>
+    <footer class="site-footer">
+        <div class="wrap">
+            <p>© 2026 Seongju Hwang</p>
+            <p><a href="https://github.com/svng-zu/MyPortFolio/raw/main/Resume.pdf">Download resume (PDF)</a></p>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="py-12 border-t border-white/5 text-center text-slate-500 text-sm">
-        <p>© 2026 Seongju Hwang. Data Engineer Portfolio.</p>
-        <p class="mt-2 text-xs uppercase tracking-widest">Scalable Data Architecture Specialist</p>
     </footer>
 
-    <script>
-        // Initialize Lucide Icons
-        lucide.createIcons();
-
-        // Initialize Mermaid
-        mermaid.initialize({
-            startOnLoad: false,
-            theme: 'dark',
-            fontFamily: 'Inter',
-            securityLevel: 'loose',
-            flowchart: {
-                useMaxWidth: true,
-                htmlLabels: true,
-                curve: 'basis'
-            }
-        });
-
-        // Run mermaid on load
-        window.addEventListener('load', () => {
-            mermaid.run();
-        });
-
-        // Accordion Toggle Function
-        function toggleAccordion(element) {
-            const allItems = document.querySelectorAll('.accordion-item');
-            const isActive = element.classList.contains('active');
-
-            allItems.forEach(item => {
-                item.classList.remove('active');
-            });
-
-            if (!isActive) {
-                element.classList.add('active');
-                // Re-run mermaid after animation finishes
-                setTimeout(() => {
-                    mermaid.run({
-                        nodes: element.querySelectorAll('.mermaid')
-                    });
-                }, 400);
-            }
-        }
-        function toggleModal() {
-            const modal = document.getElementById('resumeModal');
-            if (!modal) return;
-
-            const isHidden = modal.classList.contains('hidden');
-
-            if (isHidden) {
-                modal.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
-
-                // 아이콘이 안 보일 때를 대비해 모달이 열리는 순간 다시 생성 명령을 내립니다.
-                if (typeof lucide !== 'undefined') {
-                    lucide.createIcons();
-                }
-            } else {
-                modal.classList.add('hidden');
-                document.body.style.overflow = 'auto';
-            }
-        }
-
-        // 페이지 로드 시에도 한 번 실행되도록 추가
-        window.addEventListener('load', () => {
-            if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
-            }
-        });
-    </script>
-    <div id="resumeModal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4">
-        <div class="absolute inset-0 bg-slate-950/80 backdrop-blur-sm" onclick="toggleModal()"></div>
-
-        <div
-            class="glass-card w-full max-w-5xl h-[90vh] rounded-3xl overflow-hidden relative z-10 flex flex-col border border-white/10">
-            <div class="p-4 border-b border-white/5 flex justify-between items-center bg-slate-900/50">
-                <h3 class="text-white font-bold ml-2 text-sm">Seongju Hwang_Resume.pdf</h3>
-                <div class="flex items-center space-x-2">
-                    <a href="https://github.com/svng-zu/MyPortFolio/raw/main/Resume.pdf" target="_blank"
-                        class="bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center min-w-[130px]">
-                        <i data-lucide="download" class="w-4 h-4 mr-2 block"></i>
-                        <span class="leading-none">Download</span>
-                    </a>
-                    <button onclick="toggleModal()" class="p-2 text-slate-400 hover:text-white transition-colors">
-                        <i data-lucide="x" class="w-6 h-6"></i>
-                    </button>
-                </div>
-            </div>
-
-            <div class="flex-1 bg-white">
-                <iframe
-                    src="https://docs.google.com/viewer?url=https://github.com/svng-zu/MyPortFolio/raw/main/Resume.pdf&embedded=true"
-                    class="w-full h-full border-none">
-                </iframe>
+    <dialog class="resume-dialog" id="resumeDialog" aria-labelledby="resumeTitle">
+        <div class="dialog-bar">
+            <h2 class="dialog-title" id="resumeTitle">Seongju Hwang — Resume</h2>
+            <div class="dialog-actions">
+                <a class="btn btn-secondary" href="https://github.com/svng-zu/MyPortFolio/raw/main/Resume.pdf">
+                    Download PDF
+                </a>
+                <button class="icon-btn" type="button" data-close-resume aria-label="Close resume">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" aria-hidden="true">
+                        <path d="M6 6l12 12M18 6L6 18" />
+                    </svg>
+                </button>
             </div>
         </div>
-    </div>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-        <script>
-        // AOS 초기화
-        AOS.init({
-            duration: 1000, 
-            once: false,    
-            offset: 120,    
+        <iframe class="resume-frame" title="Resume PDF preview" data-src="https://docs.google.com/viewer?url=https://github.com/svng-zu/MyPortFolio/raw/main/Resume.pdf&embedded=true"></iframe>
+    </dialog>
+
+    <script>
+        document.documentElement.classList.add('js');
+
+        // Draw the pipeline once, after first paint.
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+            document.getElementById('flow').classList.add('is-drawn');
+        }));
+
+        // Resume dialog: native <dialog> gives focus trap + Esc to close.
+        const dialog = document.getElementById('resumeDialog');
+        const frame = dialog.querySelector('iframe');
+
+        document.querySelectorAll('[data-open-resume]').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                if (!frame.src) frame.src = frame.dataset.src; // load the viewer only when asked
+                dialog.showModal();
+            });
         });
 
-        // 기존에 작성했던 lucide 아이콘 생성 및 모달 함수들도 이 근처에 둡니다.
-        lucide.createIcons();
-    </script>    
+        dialog.querySelector('[data-close-resume]').addEventListener('click', () => dialog.close());
+        dialog.addEventListener('click', (e) => {
+            if (e.target === dialog) dialog.close(); // click on backdrop
+        });
+    </script>
 </body>
 
 </html>
