@@ -1528,7 +1528,7 @@
                         </div>
                         <div class="conn conn-quiet" style="grid-area:c4">
                             <span class="conn-line" style="--step:1" aria-hidden="true"></span>
-                            <span class="conn-label">스냅샷 10분 주기</span>
+                            <span class="conn-label">마이크로배치 적재</span>
                         </div>
 
                         <div class="node node-lake" style="grid-area:lake">
@@ -1712,9 +1712,9 @@
                         <ul class="dash"><li>Kafka와 Spark Structured Streaming, 약 70만 디바이스, 초당 10만 이벤트</li><li>마이크로배치 1~2분 유지, Executor 수·병렬도·셔플 파티션·실행 주기 튜닝</li><li>체크포인트 경로 분리, 장애 시 오프셋 기반 재처리 검증</li><li>장시간 작업의 Kerberos 티켓 만료와 스토리지 인증 오류 대응</li></ul>
                     </div>
                     <div class="col">
-                        <h3>무중단 스냅샷 갱신</h3>
+                        <h3>채널계 데이터 10분 주기 갱신</h3>
                         <p class="col-tag">운영·튜닝</p>
-                        <ul class="dash"><li>10분 주기 스냅샷 테이블을 1~2분 안에 갱신</li><li>새 데이터를 스테이징 경로에 쓴 뒤 Hive 테이블 위치를 한 번에 바꿔, 갱신 중에도 조회 유지</li></ul>
+                        <ul class="dash"><li>Spark Streaming을 heartbeat 기준으로 10분마다 쿼리가 실행되게 구성해 채널계 MySQL과 Hive 사이 데이터를 갱신</li><li>10분 주기 스냅샷 테이블을 1~2분 안에 갱신</li><li>새 데이터를 스테이징 경로에 쓴 뒤 Hive 테이블 위치를 한 번에 바꿔, 갱신 중에도 조회 유지</li></ul>
                     </div>
                     <div class="col">
                         <h3>데이터 마트와 플랫폼</h3>
@@ -1927,6 +1927,8 @@
                             <ul>
                                 <li><b>IoT streaming.</b> Developed Spark Structured Streaming pipelines ingesting
                                     100K events/sec from 700K devices via Kafka.</li>
+                                <li><b>Channel data sync.</b> Set up a Spark Streaming job that runs queries every 10 minutes
+                                    on a heartbeat trigger, keeping channel-system data in MySQL and Hive in sync.</li>
                                 <li><b>BI infrastructure.</b> Built the end-to-end Power BI setup, including the
                                     on-prem gateway and security coordination.</li>
                                 <li><b>Modern stack.</b> Supply the data mart behind the Apache Superset TM dashboards and
