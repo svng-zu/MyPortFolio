@@ -1,13 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" data-view="ko">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seongju Hwang — Data Engineer</title>
+    <title>황성주 | 데이터 분석 엔지니어</title>
     <meta name="description"
-        content="Seongju Hwang, data engineer at Hanwha General Insurance. Spark CDC ingestion, 300+ Oozie workflows, ~1B rows a day.">
+        content="황성주(Seongju Hwang), 한화손해보험 Data Lab 데이터 분석 엔지니어. TM 상담사 마트, 하루 약 10억 건 CDC 파이프라인 재설계, Oozie → Airflow 이관.">
     <meta name="theme-color" content="#EDEFF1">
+    <script>
+        // Pick the language before first paint to avoid a flash of the wrong one.
+        (function () {
+            var p = new URLSearchParams(location.search).get('lang');
+            if (p === 'en' || p === 'ko') document.documentElement.setAttribute('data-view', p);
+            document.documentElement.classList.add('js');
+        })();
+    </script>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -37,7 +47,7 @@
             --color-action: var(--cobalt-600);
             --color-action-hover: var(--cobalt-700);
 
-            --font-sans: 'Schibsted Grotesk', ui-sans-serif, system-ui, -apple-system, 'Apple SD Gothic Neo', sans-serif;
+            --font-sans: 'Schibsted Grotesk', 'Pretendard Variable', Pretendard, ui-sans-serif, system-ui, -apple-system, 'Apple SD Gothic Neo', sans-serif;
 
             --text-sm: 0.875rem;
             --text-base: 1.0625rem;
@@ -720,18 +730,731 @@
             border: 0;
             background: var(--color-bg);
         }
+
+        /* ---------- Language view ---------- */
+        html[data-view="ko"] [data-for="en"],
+        html[data-view="en"] [data-for="ko"] {
+            display: none !important;
+        }
+
+        [lang="ko"] {
+            word-break: keep-all;
+            overflow-wrap: anywhere;
+        }
+
+        div[lang="ko"] {
+            line-height: 1.7;
+        }
+
+        .lang-switch {
+            display: inline-flex;
+            align-items: center;
+            min-height: 44px;
+            padding-inline: var(--space-3);
+            font-size: var(--text-sm);
+            font-weight: 600;
+            color: var(--color-text);
+            text-decoration: underline;
+            text-decoration-color: var(--color-rule);
+            text-underline-offset: 4px;
+            transition: text-decoration-color 150ms ease;
+        }
+
+        @media (hover: hover) {
+            .lang-switch:hover {
+                text-decoration-color: currentColor;
+            }
+        }
+
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0 0 0 0);
+            white-space: nowrap;
+        }
+
+        .aside {
+            color: var(--color-text-muted);
+            font-size: var(--text-sm);
+        }
+
+        article[id] {
+            scroll-margin-top: calc(var(--header-h) + var(--space-4));
+        }
+
+        /* KO hero: Hangul needs a slightly looser display setting */
+        div[lang="ko"] .hero-name {
+            letter-spacing: -0.03em;
+            line-height: 1;
+        }
+
+        div[lang="ko"] .hero-lede {
+            max-width: 30em;
+            font-size: var(--text-lg);
+            line-height: 1.55;
+        }
+
+        @media (min-width: 900px) {
+            div[lang="ko"] .hero-intro {
+                align-items: start;
+            }
+
+            div[lang="ko"] .hero-lede {
+                font-size: 1.375rem;
+            }
+        }
+
+        .use-list li {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .use-list li + li {
+            margin-top: var(--space-2);
+        }
+
+        @media (max-width: 899px) {
+            .node-use .use-list {
+                display: flex;
+                flex-wrap: wrap;
+                gap: var(--space-2) var(--space-6);
+            }
+
+            .use-list li + li {
+                margin-top: 0;
+            }
+        }
+
+        /* ---------- Key numbers ---------- */
+        .numbers {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: var(--space-8) var(--space-6);
+        }
+
+        .numbers > div {
+            padding-top: var(--space-3);
+            border-top: 2px solid var(--color-text);
+        }
+
+        .numbers dt {
+            font-size: var(--text-xl);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            font-variant-numeric: tabular-nums;
+            line-height: 1.25;
+        }
+
+        .numbers dd {
+            margin-top: var(--space-2);
+            color: var(--color-text-muted);
+            font-size: var(--text-sm);
+            line-height: 1.6;
+        }
+
+        /* ---------- Section head / toc ---------- */
+        .section-head {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: var(--space-2) var(--space-8);
+            margin-bottom: var(--space-8);
+        }
+
+        .section-head .section-title {
+            margin-bottom: 0;
+        }
+
+        .section-note {
+            font-size: var(--text-sm);
+            color: var(--color-text-muted);
+            max-width: 44em;
+        }
+
+        .section-title-gap {
+            margin-top: var(--space-16);
+        }
+
+        .toc {
+            margin-bottom: var(--space-12);
+            padding: var(--space-4) var(--space-6);
+            background: var(--color-surface);
+            border: 1px solid var(--color-rule);
+            border-radius: var(--radius-md);
+        }
+
+        .toc ol {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            counter-reset: toc;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 0 var(--space-6);
+        }
+
+        .toc li {
+            counter-increment: toc;
+        }
+
+        .toc a {
+            display: flex;
+            gap: var(--space-3);
+            min-height: 44px;
+            align-items: center;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .toc a::before {
+            content: "P" counter(toc);
+            flex: none;
+            width: 2em;
+            color: var(--color-text-muted);
+            font-weight: 600;
+            font-variant-numeric: tabular-nums;
+        }
+
+        @media (hover: hover) {
+            .toc a:hover {
+                color: var(--color-action);
+            }
+        }
+
+        /* ---------- Project ---------- */
+        .project {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            gap: var(--space-6) var(--space-12);
+        }
+
+        .project + .project {
+            margin-top: var(--space-16);
+            padding-top: var(--space-16);
+            border-top: 1px solid var(--color-rule);
+        }
+
+        .project-code {
+            font-size: var(--text-sm);
+            font-weight: 700;
+            color: var(--color-action);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .meta {
+            margin: var(--space-3) 0 0;
+            font-size: var(--text-sm);
+            line-height: 1.6;
+        }
+
+        .meta dt {
+            color: var(--color-text-muted);
+        }
+
+        .meta dd {
+            margin: 0 0 var(--space-3);
+        }
+
+        .project-title {
+            font-size: var(--text-xl);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.3;
+        }
+
+        .project-lead {
+            margin-top: var(--space-4);
+            font-size: var(--text-lg);
+            line-height: 1.6;
+            max-width: 40em;
+        }
+
+        .block {
+            margin-top: var(--space-8);
+        }
+
+        .block h4 {
+            font-size: var(--text-base);
+            font-weight: 700;
+            margin-bottom: var(--space-3);
+        }
+
+        .block > p,
+        .block .dash,
+        .block .steps {
+            max-width: 44em;
+            color: var(--color-text-muted);
+        }
+
+        .dash li {
+            position: relative;
+            padding-left: var(--space-6);
+        }
+
+        .dash li + li {
+            margin-top: var(--space-2);
+        }
+
+        .dash li::before {
+            content: "";
+            position: absolute;
+            left: 2px;
+            top: 0.8em;
+            width: 10px;
+            height: 2px;
+            background: var(--color-rule);
+        }
+
+        .dash b,
+        .steps b {
+            color: var(--color-text);
+            font-weight: 600;
+        }
+
+        .steps {
+            margin: 0;
+            padding-left: 1.5em;
+        }
+
+        .steps li {
+            padding-left: var(--space-2);
+        }
+
+        .steps li + li {
+            margin-top: var(--space-2);
+        }
+
+        .steps li::marker {
+            color: var(--color-text);
+            font-weight: 600;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .after-table {
+            margin-top: var(--space-3);
+            font-size: var(--text-sm);
+        }
+
+        @media (min-width: 900px) {
+            .project {
+                grid-template-columns: 200px minmax(0, 1fr);
+            }
+
+            .project-side {
+                position: sticky;
+                top: calc(var(--header-h) + var(--space-6));
+                align-self: start;
+            }
+
+            .project-code {
+                padding-top: 6px;
+            }
+        }
+
+        /* ---------- Stage strip (sequence: data moves left to right) ---------- */
+        .strip + .strip {
+            margin-top: var(--space-4);
+        }
+
+        .strip-label {
+            font-size: var(--text-sm);
+            font-weight: 600;
+            margin-bottom: var(--space-2);
+        }
+
+        .stages {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            gap: var(--space-6);
+        }
+
+        .stage {
+            position: relative;
+            padding: var(--space-3) var(--space-4);
+            background: var(--color-surface);
+            border: 1px solid var(--color-rule);
+            border-radius: var(--radius-sm);
+            line-height: 1.5;
+        }
+
+        .stage + .stage::before {
+            content: "";
+            position: absolute;
+            left: var(--space-6);
+            top: calc(-1 * var(--space-6));
+            width: 2px;
+            height: var(--space-6);
+            background: var(--color-flow);
+        }
+
+        .stage-label {
+            font-size: var(--text-sm);
+            color: var(--color-text-muted);
+        }
+
+        .stage-name {
+            font-weight: 600;
+        }
+
+        .stage-detail {
+            margin-top: 2px;
+            font-size: var(--text-sm);
+            color: var(--color-text-muted);
+        }
+
+        @media (min-width: 900px) {
+            .stages {
+                grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+                gap: var(--space-6);
+            }
+
+            .stage + .stage::before {
+                left: calc(-1 * var(--space-6));
+                top: 50%;
+                width: var(--space-6);
+                height: 2px;
+            }
+        }
+
+        /* ---------- Responsive table ---------- */
+        .table-wrap {
+            background: var(--color-surface);
+            border: 1px solid var(--color-rule);
+            border-radius: var(--radius-sm);
+        }
+
+        .rt {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: var(--text-sm);
+            line-height: 1.6;
+        }
+
+        .rt th,
+        .rt td {
+            padding: var(--space-3) var(--space-4);
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .rt thead th {
+            font-weight: 600;
+            color: var(--color-text-muted);
+            border-bottom: 1px solid var(--color-rule);
+            white-space: nowrap;
+        }
+
+        .rt tbody tr + tr > * {
+            border-top: 1px solid var(--color-rule);
+        }
+
+        .rt tbody th {
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .rt td {
+            color: var(--color-text-muted);
+        }
+
+        .rt td b {
+            color: var(--color-text);
+            font-weight: 600;
+        }
+
+        .rt.numeric td,
+        .rt.numeric th {
+            font-variant-numeric: tabular-nums;
+        }
+
+        @media (max-width: 719px) {
+            .rt thead {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                overflow: hidden;
+                clip: rect(0 0 0 0);
+            }
+
+            .rt tr,
+            .rt th,
+            .rt td {
+                display: block;
+            }
+
+            .rt tbody tr {
+                padding: var(--space-3) var(--space-4);
+            }
+
+            .rt tbody tr + tr {
+                border-top: 1px solid var(--color-rule);
+            }
+
+            .rt tbody tr + tr > * {
+                border-top: 0;
+            }
+
+            .rt tbody th,
+            .rt td {
+                padding: 0;
+            }
+
+            .rt tbody th {
+                margin-bottom: var(--space-2);
+            }
+
+            .rt td {
+                display: grid;
+                grid-template-columns: 6.5em minmax(0, 1fr);
+                gap: var(--space-3);
+            }
+
+            .rt td + td {
+                margin-top: var(--space-1);
+            }
+
+            .rt td::before {
+                content: attr(data-label);
+                color: var(--color-text-muted);
+                opacity: 0.8;
+            }
+        }
+
+        /* ---------- Principles (the loud section) ---------- */
+        .principles-section {
+            background: var(--color-text);
+            color: var(--color-bg);
+            border-top: 0;
+        }
+
+        .principles-section .section-title {
+            color: #AEB6C0;
+            font-size: var(--text-base);
+            font-weight: 600;
+        }
+
+        .principles {
+            display: grid;
+            gap: var(--space-12);
+        }
+
+        .principle {
+            font-size: clamp(1.5rem, 3.4vw, 2.5rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.3;
+            text-wrap: balance;
+        }
+
+        .principles li > p + p {
+            margin-top: var(--space-3);
+            max-width: 40em;
+            color: #AEB6C0;
+        }
+
+        /* ---------- Columns / facts ---------- */
+        .columns {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: var(--space-12) var(--space-8);
+        }
+
+        .col h3,
+        .ways h3 {
+            font-size: var(--text-base);
+            font-weight: 700;
+            padding-top: var(--space-3);
+            border-top: 2px solid var(--color-text);
+        }
+
+        .col-tag {
+            font-size: var(--text-sm);
+            color: var(--color-text-muted);
+            margin: var(--space-1) 0 var(--space-4);
+        }
+
+        .col h3 + .dash,
+        .col h3 + .facts {
+            margin-top: var(--space-4);
+        }
+
+        .col .dash {
+            color: var(--color-text-muted);
+            font-size: var(--text-sm);
+        }
+
+        .facts > div + div {
+            margin-top: var(--space-4);
+        }
+
+        .facts dt {
+            font-size: var(--text-sm);
+            font-weight: 600;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .facts dd {
+            font-size: var(--text-sm);
+            color: var(--color-text-muted);
+        }
+
+        .ways {
+            margin-top: var(--space-16);
+            max-width: 52em;
+        }
+
+        .ways .dash {
+            margin-top: var(--space-4);
+            color: var(--color-text-muted);
+        }
+
+        .role-text {
+            margin-top: var(--space-2);
+            color: var(--color-text-muted);
+            max-width: 44em;
+        }
+
+        .skill-group .plain li + li {
+            margin-top: var(--space-1);
+        }
+
+        /* ---------- Contact ---------- */
+        .contact-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: var(--space-6);
+        }
+
+        .contact-list dt {
+            font-size: var(--text-sm);
+            color: var(--color-text-muted);
+        }
+
+        .contact-list dd {
+            font-size: var(--text-lg);
+            font-weight: 600;
+            overflow-wrap: anywhere;
+        }
+
+        .contact-list a,
+        .col a {
+            text-decoration-color: var(--color-rule);
+            text-underline-offset: 4px;
+            transition: text-decoration-color 150ms ease;
+        }
+
+        @media (hover: hover) {
+
+            .contact-list a:hover,
+            .col a:hover {
+                text-decoration-color: currentColor;
+            }
+        }
+
+        .lang-switch {
+            white-space: nowrap;
+        }
+
+        .rt tbody th {
+            min-width: 7.5em;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-2) var(--space-6);
+        }
+
+        @media (max-width: 440px) {
+            .site-nav .icon-link[href*="linkedin"] {
+                display: none;
+            }
+        }
+
+        /* Mobile: title and lead first, then the role/tech meta, then the detail. */
+        @media (max-width: 899px) {
+            .project {
+                display: flex;
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .project-body {
+                display: contents;
+            }
+
+            .project-title {
+                order: 1;
+            }
+
+            .project-lead {
+                order: 2;
+            }
+
+            .project-side {
+                order: 3;
+                margin-top: var(--space-6);
+                padding: var(--space-3) var(--space-4);
+                background: var(--color-surface);
+                border: 1px solid var(--color-rule);
+                border-radius: var(--radius-sm);
+            }
+
+            .project .block {
+                order: 4;
+            }
+
+            .project-code {
+                order: 0;
+                margin-bottom: var(--space-2);
+            }
+
+            .project-side .project-code {
+                display: none;
+            }
+
+            .meta {
+                display: grid;
+                grid-template-columns: 3em minmax(0, 1fr);
+                gap: var(--space-1) var(--space-3);
+                margin: 0;
+            }
+
+            .meta dd {
+                margin: 0;
+            }
+        }
+
+        @media (min-width: 900px) {
+            .project-code-mobile {
+                display: none;
+            }
+        }
+
     </style>
 </head>
 
 <body>
-    <a class="skip-link" href="#main">Skip to content</a>
+    <a class="skip-link" href="#main"><span data-for="ko">본문으로 건너뛰기</span><span data-for="en">Skip to content</span></a>
 
     <header class="site-header">
         <div class="wrap">
-            <a class="site-name" href="#top">Seongju Hwang</a>
+            <a class="site-name" href="#main"><span data-for="ko">황성주</span><span data-for="en">Seongju Hwang</span></a>
             <nav class="site-nav" aria-label="Primary">
-                <a class="nav-link optional" href="#experience">Experience</a>
-                <a class="nav-link optional" href="#skills">Skills</a>
+                <a class="nav-link optional" data-for="ko" href="#projects">프로젝트</a>
+                <a class="nav-link optional" data-for="ko" href="#career">경력</a>
+                <a class="nav-link optional" data-for="ko" href="#contact">연락처</a>
+                <a class="nav-link optional" data-for="en" href="#experience-en">Experience</a>
+                <a class="nav-link optional" data-for="en" href="#skills-en">Skills</a>
+                <a class="lang-switch" data-for="ko" href="?lang=en" hreflang="en" lang="en" data-set-lang="en" aria-label="Read in English">EN</a>
+                <a class="lang-switch" data-for="en" href="?lang=ko" hreflang="ko" lang="ko" data-set-lang="ko" aria-label="한국어로 보기">한국어</a>
                 <a class="icon-link" href="https://github.com/svng-zu" target="_blank" rel="noopener"
                     aria-label="GitHub profile">
                     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -746,26 +1469,363 @@
                             d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z" />
                     </svg>
                 </a>
-                <button class="btn btn-primary" type="button" data-open-resume><span class="optional-word">View </span>resume</button>
+                <button class="btn btn-primary" type="button" data-open-resume><span data-for="ko">이력서</span><span data-for="en">Resume</span></button>
             </nav>
         </div>
     </header>
 
     <main id="main">
+        <div data-for="ko" lang="ko">
+        <!-- Hero (KO) -->
+        <section class="hero" id="top-ko">
+            <div class="wrap">
+                <h1 class="hero-name">황성주</h1>
+                <div class="hero-intro">
+                    <p class="hero-lede">Hadoop 위에서 Hive와 Spark SQL로 데이터를 다루고, 데이터를 쓰는 사람의 질문에 맞춰 마트를 설계하고 운영하는 데이터 분석 엔지니어입니다.</p>
+                    <p class="hero-facts">보험사 Data Lab에서 장기 TM 본부 약 300명이 매일 보는 상담사 실적 마트와 5개 조직이 쓰는 보험 실적 마트를 만들었습니다. 그 마트에 데이터를 대는 CDC 파이프라인(하루 약 10억 건, 테이블 약 290개)도 직접 다시 설계해, 적재 시간을 절반가량 줄이고 실패를 없앴습니다. 분석가가 배치를 직접 확인하고 다시 돌릴 수 있게 Airflow 이관과 가이드도 맡았습니다.</p>
+                </div>
+
+                <figure class="flow-figure">
+                    <div class="flow" id="flow-ko">
+                        <p class="flow-head" style="grid-area:h1">원천</p>
+                        <p class="flow-head" style="grid-area:h2">처리</p>
+                        <p class="flow-head" style="grid-area:h3">레이크</p>
+                        <p class="flow-head" style="grid-area:h4">마트와 대시보드</p>
+
+                        <div class="node" style="grid-area:s1">
+                            <p class="node-name">Tibero, MySQL</p>
+                            <p class="node-detail">보험 업무 DB</p>
+                        </div>
+                        <div class="conn" style="grid-area:c1">
+                            <span class="conn-line" style="--step:0" aria-hidden="true"></span>
+                            <span class="conn-label"><strong>테이블 약 290개</strong>Spark JDBC CDC</span>
+                        </div>
+                        <div class="node" style="grid-area:p1">
+                            <p class="node-name">PySpark 배치</p>
+                            <p class="node-detail">테이블별 독립 프로세스, Airflow</p>
+                        </div>
+                        <div class="conn" style="grid-area:c2">
+                            <span class="conn-line" style="--step:1" aria-hidden="true"></span>
+                            <span class="conn-label"><strong>하루 약 10억 건</strong>3시간 30분 안에</span>
+                        </div>
+
+                        <div class="node" style="grid-area:s2">
+                            <p class="node-name">약 70만 디바이스</p>
+                            <p class="node-detail">차량 주행 데이터 플러그</p>
+                        </div>
+                        <div class="conn" style="grid-area:c3">
+                            <span class="conn-line" style="--step:0" aria-hidden="true"></span>
+                            <span class="conn-label"><strong>초당 10만 이벤트</strong>Kafka</span>
+                        </div>
+                        <div class="node" style="grid-area:p2">
+                            <p class="node-name">Structured Streaming</p>
+                            <p class="node-detail">마이크로배치 1~2분</p>
+                        </div>
+                        <div class="conn conn-quiet" style="grid-area:c4">
+                            <span class="conn-line" style="--step:1" aria-hidden="true"></span>
+                            <span class="conn-label">스냅샷 10분 주기</span>
+                        </div>
+
+                        <div class="node node-lake" style="grid-area:lake">
+                            <p class="node-name">Azure HDInsight</p>
+                            <p class="node-detail">HDFS, Hive Metastore</p>
+                        </div>
+                        <div class="conn conn-quiet" style="grid-area:c5">
+                            <span class="conn-line" style="--step:2" aria-hidden="true"></span>
+                            <span class="conn-label">집계 마트</span>
+                        </div>
+                        <div class="node node-use" style="grid-area:use">
+                            <ul class="use-list">
+                                <li><span class="node-name">Superset</span><span class="node-detail">TM 본부 약 300명</span></li>
+                                <li><span class="node-name">Power BI</span><span class="node-detail">5개 조직</span></li>
+                                <li><span class="node-name">JupyterHub</span><span class="node-detail">분석가</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <figcaption class="flow-caption">지금 운영하는 데이터 흐름입니다. 위는 CDC 배치, 아래는 주행 데이터 스트리밍이고, 둘 다 Hive 레이크에 모인 뒤 마트로 나갑니다.</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <!-- Key numbers -->
+        <section class="section" aria-labelledby="numbers-title">
+            <div class="wrap">
+                <h2 class="section-title" id="numbers-title">핵심 수치</h2>
+                <dl class="numbers">
+                    <div><dt>약 300명</dt><dd>장기 TM 본부가 매일 보는 상담사 마트. Power BI 실적 마트는 5개 조직에 제공</dd></div>
+                    <div><dt>하루 약 10억 건</dt><dd>테이블 약 290개를 CDC로 적재 (Hadoop, PySpark)</dd></div>
+                    <div><dt>7시간 → 3시간 30분</dt><dd>하루 적재 시간. 타임아웃 실패는 주 1~2건에서 0건으로</dd></div>
+                    <div><dt>2시간 → 30분</dt><dd>Hive(Tez) 배치를 Spark로 전환한 평균 배치 시간</dd></div>
+                </dl>
+            </div>
+        </section>
+
+        <!-- Projects -->
+        <section class="section" id="projects" aria-labelledby="projects-title">
+            <div class="wrap">
+                <div class="section-head">
+                    <h2 class="section-title" id="projects-title">대표 프로젝트</h2>
+                    <p class="section-note">사내 테이블명과 데이터는 일반화해 표기했습니다. 수치마다 측정 근거를 함께 적었습니다.</p>
+                </div>
+                <nav class="toc" aria-label="프로젝트 목록">
+                    <ol>
+                        <li><a href="#p1">TM 상담사 활동·실적 집계 마트</a></li>
+                        <li><a href="#p2">CDC 수집 파이프라인 재설계</a></li>
+                        <li><a href="#p3">Oozie → Airflow 배치 이관과 리니지</a></li>
+                        <li><a href="#p4">SQL·Spark 배치 최적화</a></li>
+                        <li><a href="#p5">Power BI 보험 실적 마트와 대시보드</a></li>
+                    </ol>
+                </nav>
+                
+                <article class="project" id="p1" aria-labelledby="p1-title">
+                    <div class="project-side">
+                        <p class="project-code">P1</p>
+                        <dl class="meta"><dt>역할</dt><dd>마트 SQL 설계·개발, 배치 자동화·운영 <span class="aside">(요구사항 정의와 대시보드 화면 제작은 담당 범위 밖)</span></dd><dt>사용</dt><dd>장기 TM 본부 약 300명, 하루 여러 번 갱신</dd><dt>기술</dt><dd>Oracle SQL, 윈도우 함수, CTE, Superset</dd></dl>
+                    </div>
+                    <div class="project-body">
+                        <p class="project-code project-code-mobile" aria-hidden="true">P1</p>
+                        <h3 class="project-title" id="p1-title">TM 상담사 활동·실적 집계 마트</h3>
+                        <p class="project-lead">기준 날짜가 서로 다른 통화 활동과 청약 실적을 상담사 × 월 단위로 맞춘 집계 마트를 설계했습니다. 장기 TM 본부 약 300명이 쓰는 대시보드에 하루 여러 번 공급하고 있습니다.</p>
+                        <div class="block"><h4>배경</h4><p>장기 TM 본부가 상담사별 배정과 통화 활동, 청약 실적을 한 화면에서 보고자 했습니다. 원천은 Oracle DB의 통화 로그, 고객 DB 배정, 청약, 상담사 정보입니다.</p></div><div class="block"><h4>문제</h4><ul class="dash"><li>활동(통화 로그)과 실적(청약)의 기준 날짜가 달라, 한 날짜로 조인하면 어느 한쪽이 빠졌습니다.</li><li>실적이 없는 달의 상담사가 집계에서 사라져 월별 인원과 추이가 맞지 않았습니다.</li><li>FIRST_VALUE에 상담사 단위 파티션이 없어 최종 영업 상태가 모두 같은 값으로 나왔습니다.</li><li>BI 데이터셋 안의 윈도우 함수가 GROUP BY 오류를 냈습니다.</li></ul></div><div class="block"><h4>구조</h4><div class="strip"><ol class="stages" style="--n:5"><li class="stage"><p class="stage-label">원천</p><p class="stage-name">Oracle</p><p class="stage-detail">통화 로그, 고객 DB 배정, 청약, 상담사 정보</p></li><li class="stage"><p class="stage-label">기본 CTE</p><p class="stage-name">3갈래 UNION ALL</p><p class="stage-detail">활동일자와 청약일자를 독립 컬럼으로 둠</p></li><li class="stage"><p class="stage-label">기준 틀</p><p class="stage-name">상담사 × 월</p><p class="stage-detail">실적 없는 달도 0으로 남김</p></li><li class="stage"><p class="stage-label">소비 마트</p><p class="stage-name">대시보드 전용 테이블</p><p class="stage-detail">윈도우 계산까지 마트에서 끝냄</p></li><li class="stage"><p class="stage-label">대시보드</p><p class="stage-name">장기 TM 본부 약 300명</p><p class="stage-detail">하루 여러 번 갱신</p></li></ol></div></div><div class="block"><h4>기술적 판단</h4><div class="table-wrap"><table class="rt "><thead><tr><th scope="col">결정</th><th scope="col">검토한 대안</th><th scope="col">선택과 이유</th></tr></thead><tbody><tr><th scope="row" data-label="결정">날짜 기준</th><td data-label="검토한 대안">하나의 기준 날짜로 조인</td><td data-label="선택과 이유">활동일자와 청약일자를 독립 컬럼으로 둔 3갈래 UNION ALL. 활동만 있는 날과 실적만 있는 날이 모두 남습니다.</td></tr><tr><th scope="row" data-label="결정">집계 단위</th><td data-label="검토한 대안">실적 테이블 기준 집계</td><td data-label="선택과 이유">상담사 × 월 기준 틀을 먼저 만들고 실적을 LEFT JOIN. 실적 없는 달도 0으로 보여 인원 수가 맞습니다.</td></tr><tr><th scope="row" data-label="결정">마트 계층</th><td data-label="검토한 대안">BI 데이터셋에서 윈도우 계산</td><td data-label="선택과 이유">계산을 마트 단계로 내려 대시보드 전용 소비 마트를 따로 둠. BI 툴 제약을 피하고, 화면마다 숫자가 갈라지지 않게 했습니다.</td></tr></tbody></table></div></div><div class="block"><h4>제공 지표</h4><p>고객 DB 배정 수, 통화 수, 통화 시간, 실제 통화 시간, 청약 건수와 금액, 전환율(통화 대비 청약), 상담사 영업 상태, 캠페인별 실적, 제휴처별 실적, 보험 유지율</p></div><div class="block"><h4>운영 성과</h4><ul class="dash"><li>장기 TM 본부 약 300명이 사용, 하루 여러 번 자동 갱신</li><li>수치는 기존 보고 자료와 대조하고, 현업 검수 후 오류를 고쳐 검증</li></ul></div>
+                    </div>
+                </article>
+                <article class="project" id="p2" aria-labelledby="p2-title">
+                    <div class="project-side">
+                        <p class="project-code">P2</p>
+                        <dl class="meta"><dt>역할</dt><dd>설계, 개발, 전환, 검증, 배포 전담</dd><dt>규모</dt><dd>배치 약 190개, 테이블 약 290개, 하루 약 10억 건</dd><dt>기술</dt><dd>Python, PySpark, Spark JDBC, Hive, HDInsight, Tibero, MySQL</dd></dl>
+                    </div>
+                    <div class="project-body">
+                        <p class="project-code project-code-mobile" aria-hidden="true">P2</p>
+                        <h3 class="project-title" id="p2-title">CDC 수집 파이프라인 재설계</h3>
+                        <p class="project-lead">Sqoop 지원 종료로 전면 교체가 필요했던 Hadoop 위 CDC 배치를, 테이블마다 독립 실행되는 메타 기반 PySpark 구조로 다시 만들었습니다. 적재 시간은 절반가량 줄었고 타임아웃 실패는 사라졌습니다.</p>
+                        <div class="block"><h4>배경</h4><p>HDInsight 5.1에서 Sqoop 지원이 끝나, Oozie로 돌던 Sqoop CDC 배치를 모두 바꿔야 했습니다.</p></div><div class="block"><h4>문제</h4><ul class="dash"><li>하나의 Spark 세션 안에서 Python 스레드로 여러 테이블을 동시에 처리해, 큰 테이블 하나가 자원을 다 쓰면 세션 전체와 다른 테이블까지 함께 실패했습니다.</li><li>여러 작업이 실행 이력 테이블에 동시에 쓰면서 충돌이 났습니다.</li><li>Oozie 타임아웃으로 주 1~2건 실패가 반복됐습니다.</li><li>원천 Tibero의 DATE 타입 바인딩 문제로 Spark 기본 분할 수집이 동작하지 않았습니다.</li></ul></div><div class="block"><h4>구조 (이전 → 이후)</h4><div class="strip"><p class="strip-label">이전</p><ol class="stages" style="--n:4"><li class="stage"><p class="stage-label">설정</p><p class="stage-name">Oozie XML</p><p class="stage-detail">배치별 설정 약 190개</p></li><li class="stage"><p class="stage-label">실행</p><p class="stage-name">단일 Spark 세션</p><p class="stage-detail">Python 스레드로 여러 테이블 동시 처리. 한 테이블의 자원 초과가 전체 실패로 번짐</p></li><li class="stage"><p class="stage-label">적재</p><p class="stage-name">Hive</p></li><li class="stage"><p class="stage-label">이력 기록</p><p class="stage-name">동시 쓰기</p><p class="stage-detail">각 작업이 이력 테이블에 동시에 써서 충돌</p></li></ol></div><div class="strip"><p class="strip-label">이후</p><ol class="stages" style="--n:4"><li class="stage"><p class="stage-label">설정</p><p class="stage-name">메타 테이블</p><p class="stage-detail">접속 정보, CDC 쿼리, 주기</p></li><li class="stage"><p class="stage-label">실행</p><p class="stage-name">오케스트레이터 + 테이블별 PySpark</p><p class="stage-detail">1 테이블 = 1 독립 프로세스, 동시 실행 최대 10개, 실패한 테이블만 재시도</p></li><li class="stage"><p class="stage-label">적재</p><p class="stage-name">Hive</p></li><li class="stage"><p class="stage-label">이력 기록</p><p class="stage-name">순차 기록</p><p class="stage-detail">오케스트레이터가 결과를 받아 ETL 로그 테이블에 기록</p></li></ol></div></div><div class="block"><h4>담당 범위</h4><ul class="dash"><li>전체 구조와 아키텍처 설계, 공통 Spark JDBC 프레임워크 개발</li><li>Oozie XML을 분석해 접속 정보·CDC 쿼리·주기를 메타 테이블로 옮기고, ETL 로그 테이블 설계</li><li>원천 컬럼이 바뀌면 자동으로 반영되는 로직 구현</li><li>개별 배치 전환과 SQL 수정, 정합성 검증과 성능 테스트, 운영 배포와 안정화</li></ul></div><div class="block"><h4>기술적 판단</h4><div class="table-wrap"><table class="rt "><thead><tr><th scope="col">결정</th><th scope="col">검토한 대안</th><th scope="col">선택과 이유</th></tr></thead><tbody><tr><th scope="row" data-label="결정">실행 단위</th><td data-label="검토한 대안">한 세션 안 Python 스레드 병렬</td><td data-label="선택과 이유">테이블당 독립 PySpark 프로세스. 작업마다 시작 비용은 들지만, 스레드 방식은 자원 초과 시 전체가 실패해 안정성을 우선했습니다.</td></tr><tr><th scope="row" data-label="결정">동시 실행 수</th><td data-label="검토한 대안">제한 없음, 순차 실행</td><td data-label="선택과 이유">최대 10개. 클러스터 자원 여유와 원천 DB 커넥션 부하를 함께 고려했습니다.</td></tr><tr><th scope="row" data-label="결정">이력 기록</th><td data-label="검토한 대안">각 작업이 이력 테이블에 직접 쓰기</td><td data-label="선택과 이유">작업 결과를 출력 마커로 받아 오케스트레이터가 순차 기록해 동시 쓰기 충돌을 없앴습니다.</td></tr><tr><th scope="row" data-label="결정">분할 수집</th><td data-label="검토한 대안">Spark 기본 파티션 컬럼 분할</td><td data-label="선택과 이유">데이터 분포 기준으로 구간을 직접 나눠(NTILE) 병렬 수집해 Tibero DATE 바인딩 문제를 피했습니다.</td></tr><tr><th scope="row" data-label="결정">설정 관리</th><td data-label="검토한 대안">배치마다 Oozie XML 유지</td><td data-label="선택과 이유">메타 테이블로 통합하고 신규 테이블 등록을 스크립트로 자동화했습니다.</td></tr></tbody></table></div><p class="after-table">재시도 횟수 제한과, 중단 시 하위 프로세스와 YARN 작업을 정리하는 처리도 넣었습니다.</p></div><div class="block"><h4>결과</h4><div class="table-wrap"><table class="rt numeric"><thead><tr><th scope="col">지표</th><th scope="col">이전</th><th scope="col">이후</th><th scope="col">근거</th></tr></thead><tbody><tr><th scope="row" data-label="지표">하루 CDC 적재 시간</th><td data-label="이전">약 7시간</td><td data-label="이후"><b>약 3시간 30분</b></td><td data-label="근거">운영하며 확인한 대략치</td></tr><tr><th scope="row" data-label="지표">타임아웃 실패</th><td data-label="이전">주 1~2건</td><td data-label="이후"><b>0건</b></td><td data-label="근거">전환 후 3개월 이상 유지</td></tr><tr><th scope="row" data-label="지표">처리 규모</th><td data-label="이전">–</td><td data-label="이후"><b>테이블 약 290개, 하루 약 10억 건</b></td><td data-label="근거">배치 약 190개 전환</td></tr></tbody></table></div></div>
+                    </div>
+                </article>
+                <article class="project" id="p3" aria-labelledby="p3-title">
+                    <div class="project-side">
+                        <p class="project-code">P3</p>
+                        <dl class="meta"><dt>역할</dt><dd>분석, 이관, 버그 수정, 가이드 작성 전담</dd><dt>기술</dt><dd>Airflow, Oozie, Python</dd></dl>
+                    </div>
+                    <div class="project-body">
+                        <p class="project-code project-code-mobile" aria-hidden="true">P3</p>
+                        <h3 class="project-title" id="p3-title">Oozie → Airflow 배치 이관과 리니지</h3>
+                        <p class="project-lead">서로 얽힌 Oozie 배치 약 190개의 의존성을 추출해 리니지와 영향 범위를 먼저 만들고, 그 순서대로 Airflow로 옮겼습니다. 어떤 배치를 바꾸면 어떤 마트가 영향을 받는지 추적할 수 있게 됐습니다.</p>
+                        <div class="block"><h4>진행 순서</h4><ol class="steps"><li>코디네이터 간 선후 관계를 스크립트로 추출해 리니지 표를 만들고, 그래프 탐색으로 배치를 바꿀 때 영향받는 하위 배치와 마트를 계산했습니다.</li><li>의존성 순서대로 DAG를 자동 생성해 수작업 이관 오류를 줄였습니다.</li><li>한국 시간 기준 스케줄이 이중으로 밀리던 오류와 크론 표현식 오류를 바로잡았습니다.</li><li>데이터 분석가용 Airflow 사용 가이드를 작성해 배포했습니다. 분석가가 직접 배치를 확인하고 다시 돌릴 수 있게 됐습니다.</li></ol></div>
+                    </div>
+                </article>
+                <article class="project" id="p4" aria-labelledby="p4-title">
+                    <div class="project-side">
+                        <p class="project-code">P4</p>
+                        <dl class="meta"><dt>역할</dt><dd>직접 수행</dd><dt>기술</dt><dd>Spark SQL, Hive, Tez, Oracle SQL, Parquet, ORC</dd></dl>
+                    </div>
+                    <div class="project-body">
+                        <p class="project-code project-code-mobile" aria-hidden="true">P4</p>
+                        <h3 class="project-title" id="p4-title">SQL·Spark 배치 최적화</h3>
+                        <p class="project-lead">실행 계획을 읽고 조인, 셔플, 파일 크기, Executor 자원을 조정해 대용량 배치를 안정화했습니다. Hive(Tez) 배치를 Spark로 전환해 평균 배치 시간을 2시간에서 30분으로 줄였고, Oracle 파이프라인의 임시 테이블을 57개에서 17개로 정리했습니다.</p>
+                        <div class="block"><h4>문제</h4><p>Hive와 Spark 기반 ETL에서 조인과 집계가 많아 셔플 병목, 데이터 쏠림, 작은 파일 과다 생성, 메모리 압박이 반복됐습니다.</p></div><div class="block"><h4>한 일</h4><ol class="steps"><li>실행 계획을 분석해 브로드캐스트 조인 대상을 고르고 불필요한 셔플을 없앴습니다.</li><li>셔플 파티션 수를 다시 정하고 출력 파일 크기를 맞춰 작은 파일을 줄였습니다.</li><li>Executor 코어와 메모리를 조정해 동시 실행 수를 제어하고 GC를 줄였습니다.</li><li>Spark가 쓴 Parquet과 Hive DDL의 DECIMAL 인코딩 차이로 생긴 읽기 오류(ParquetDecodingException)를 찾아 해결했습니다.</li><li>Oracle 파이프라인에서 한 번만 참조되는 임시 테이블을 CTE로 흡수해 57개를 17개로 줄였습니다.</li></ol></div><div class="block"><h4>결과</h4><ul class="dash"><li>Hive(Tez) 배치를 Spark로 전환해 평균 배치 시간 2시간 → 30분 (인턴 시기)</li><li>데이터 쏠림을 완화해 배치 실행 시간의 편차를 줄임</li><li>Oracle 파이프라인 임시 테이블 57개 → 17개</li></ul></div>
+                    </div>
+                </article>
+                <article class="project" id="p5" aria-labelledby="p5-title">
+                    <div class="project-side">
+                        <p class="project-code">P5</p>
+                        <dl class="meta"><dt>역할</dt><dd>마트 설계, 화면 제작, 리프레시 운영, 연결 구조 설계 전담</dd><dt>대상</dt><dd>IoT 센터, 자동차 보상, 상품개발 파트, 퍼널개선 파트, 사장 직속 (5개 조직)</dd><dt>기술</dt><dd>Power BI, Hive SQL, MySQL, On-premise Gateway</dd></dl>
+                    </div>
+                    <div class="project-body">
+                        <p class="project-code project-code-mobile" aria-hidden="true">P5</p>
+                        <h3 class="project-title" id="p5-title">Power BI 보험 실적 마트와 대시보드</h3>
+                        <p class="project-lead">보험 실적을 일별, 부서별, 상품별, 제휴처별로 보는 마트와 대시보드를 직접 만들어 5개 조직에 제공했습니다. 인증 방식이 막혔을 때는 Hive 마트와 BI 조회용 저장소를 분리해 보안 정책 안에서 복구했습니다.</p>
+                        <div class="block"><h4>문제</h4><p>HDInsight 업그레이드 후 Power BI가 Kerberos 인증을 지원하지 않아, 클러스터에 직접 붙던 기존 연결을 쓸 수 없게 됐습니다.</p></div><div class="block"><h4>구조 (이전 → 이후)</h4><div class="strip"><p class="strip-label">이전</p><ol class="stages" style="--n:3"><li class="stage"><p class="stage-label">원천</p><p class="stage-name">Hive 실적 마트</p></li><li class="stage"><p class="stage-label">연결</p><p class="stage-name">Kerberos 직접 연결</p><p class="stage-detail">HDInsight 업그레이드 후 미지원</p></li><li class="stage"><p class="stage-label">조회</p><p class="stage-name">Power BI</p></li></ol></div><div class="strip"><p class="strip-label">이후</p><ol class="stages" style="--n:3"><li class="stage"><p class="stage-label">원천</p><p class="stage-name">Hive 실적 마트</p><p class="stage-detail">일별, 부서별, 상품별, 제휴처별</p></li><li class="stage"><p class="stage-label">연결</p><p class="stage-name">MySQL 중간 적재 + 온프레미스 게이트웨이</p><p class="stage-detail">내부 업무망 안에서 연결</p></li><li class="stage"><p class="stage-label">조회</p><p class="stage-name">Power BI</p><p class="stage-detail">5개 조직</p></li></ol></div></div><div class="block"><h4>기술적 판단</h4><div class="table-wrap"><table class="rt "><thead><tr><th scope="col">결정</th><th scope="col">검토한 대안</th><th scope="col">선택과 이유</th></tr></thead><tbody><tr><th scope="row" data-label="결정">연결 방식</th><td data-label="검토한 대안">Azure VNet Gateway로 클라우드 BI와 내부망 직접 연결</td><td data-label="선택과 이유">MySQL 중간 적재와 온프레미스 게이트웨이. 직접 연결안은 SaaS와 내부망을 잇는 보안 문제로 기각했습니다.</td></tr></tbody></table></div></div><div class="block"><h4>운영 성과</h4><ul class="dash"><li>5개 조직(사장 직속 포함)에 리포트 제공, 리프레시 오류 분석·해결</li><li>인증 장애 상황에서 보안 정책을 지키며 끊긴 연결을 복구</li></ul></div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Analysis -->
+        <section class="section" id="analysis" aria-labelledby="analysis-title">
+            <div class="wrap">
+                <h2 class="section-title" id="analysis-title">분석 사례</h2>
+                
+                <article class="project" id="a1" aria-labelledby="a1-title">
+                    <div class="project-side">
+                        <p class="project-code">A1</p>
+                        <dl class="meta"><dt>역할</dt><dd>탐지 기준 설계, 대시보드 제작</dd><dt>기술</dt><dd>SQL, Power BI</dd></dl>
+                    </div>
+                    <div class="project-body">
+                        <p class="project-code project-code-mobile" aria-hidden="true">A1</p>
+                        <h3 class="project-title" id="a1-title">플러그 부정사용 탐지 대시보드</h3>
+                        <p class="project-lead">사고 신고와 주행 기록을 대조해 플러그를 뽑고 운행한 것으로 의심되는 건을 찾는 Power BI 대시보드를 만들었습니다. 상무 라인에서 월납형 자동차 보험의 초기 보험금액 산정에 이 결과를 사용했습니다.</p>
+                        <div class="block"><h4>배경</h4><p>월납형 자동차 보험은 차량에 꽂은 플러그로 주행 데이터를 받아 주행거리를 측정합니다. 플러그를 뽑으면 데이터가 들어오지 않아, 고객이 이를 악용해 주행거리를 줄일 수 있었습니다.</p></div><div class="block"><h4>탐지 기준</h4><ul class="dash"><li>사고 신고가 있다는 건 그날 차가 실제로 운행됐다는 뜻입니다.</li><li>그런데 사고일 기준 전후 1일 동안 주행 기록이 없다면, 플러그를 뽑고 운행했을 가능성이 높다고 보고 의심 건으로 분류했습니다.</li><li>서로 다른 두 데이터(보상의 사고 신고, IoT의 주행 기록)가 어긋나는 지점을 근거로 삼아, 고객의 자기 신고 없이도 이상 행동을 찾을 수 있게 했습니다.</li></ul></div><div class="block"><h4>결과</h4><p>상무 라인에서 월납형 자동차 보험의 초기 보험금액 산정에 활용</p></div>
+                    </div>
+                </article>
+                <article class="project" id="a2" aria-labelledby="a2-title">
+                    <div class="project-side">
+                        <p class="project-code">A2</p>
+                        <dl class="meta"><dt>역할</dt><dd>지표 집계, 분석, 시각화·보고</dd><dt>기술</dt><dd>SQL, Power BI</dd></dl>
+                    </div>
+                    <div class="project-body">
+                        <p class="project-code project-code-mobile" aria-hidden="true">A2</p>
+                        <h3 class="project-title" id="a2-title">서비스 이탈율 × 포인트 정책 상관관계 분석</h3>
+                        <p class="project-lead">캐롯 서비스의 이탈율 지표와 포인트 정책 사이의 관계를 분석해 의사결정 자료로 보고했습니다.</p>
+                        <div class="block"><h4>진행 순서</h4><ol class="steps"><li>SQL로 서비스 이탈율 지표를 집계했습니다.</li><li>포인트 정책과 이탈율의 상관관계를 분석했습니다.</li><li>결과를 Power BI로 시각화해 포인트 정책 의사결정 자료로 보고했습니다.</li></ol></div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Principles: the one place the page raises its voice -->
+        <section class="section principles-section" aria-labelledby="principles-title">
+            <div class="wrap">
+                <h2 class="section-title" id="principles-title">마트를 설계할 때 지키는 것</h2>
+                <ul class="principles">
+                    <li><p class="principle">조인하기 전에 행 하나가 무엇인지부터 정합니다.</p><p>상담사 마트에서 인원이 맞지 않았던 건 쿼리 실수가 아니라 집계 단위를 정하지 않고 시작했기 때문이었습니다.</p></li>
+                    <li><p class="principle">계산은 소비하는 곳이 아니라 마트에서 끝냅니다.</p><p>BI 툴에서 계산하면 도구 제약에 걸리고, 화면마다 숫자가 갈라집니다.</p></li>
+                    <li><p class="principle">병렬보다 격리가 먼저입니다.</p><p>빠르게 도는 구조보다, 하나가 실패해도 번지지 않는 구조가 결국 더 빨랐습니다.</p></li>
+                    <li><p class="principle">숫자는 대조와 검수를 거쳐야 신뢰를 얻습니다.</p><p>기존 보고 자료와 맞춰 보고 현업 검수를 받은 뒤에야 마트가 실제로 쓰였습니다.</p></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Results & quality -->
+        <section class="section" id="results" aria-labelledby="results-title">
+            <div class="wrap">
+                <h2 class="section-title" id="results-title">운영 성과와 측정 근거</h2>
+                <div class="table-wrap"><table class="rt numeric"><thead><tr><th scope="col">지표</th><th scope="col">이전</th><th scope="col">이후</th><th scope="col">측정 근거</th><th scope="col">담당</th></tr></thead><tbody><tr><th scope="row" data-label="지표">TM 마트 사용 인원</th><td data-label="이전">–</td><td data-label="이후"><b>약 300명</b></td><td data-label="측정 근거">장기 TM 본부, 하루 여러 번 갱신</td><td data-label="담당">마트·배치</td></tr><tr><th scope="row" data-label="지표">Power BI 실적 마트 제공</th><td data-label="이전">–</td><td data-label="이후"><b>5개 조직</b></td><td data-label="측정 근거">사장 직속 포함, 4개 분석 기준</td><td data-label="담당">전담</td></tr><tr><th scope="row" data-label="지표">하루 CDC 적재 시간</th><td data-label="이전">약 7시간</td><td data-label="이후"><b>약 3시간 30분</b></td><td data-label="측정 근거">운영하며 확인한 대략치</td><td data-label="담당">전담</td></tr><tr><th scope="row" data-label="지표">타임아웃 실패</th><td data-label="이전">주 1~2건</td><td data-label="이후"><b>0건</b></td><td data-label="측정 근거">전환 후 3개월 이상 유지</td><td data-label="담당">전담</td></tr><tr><th scope="row" data-label="지표">CDC 처리 규모</th><td data-label="이전">–</td><td data-label="이후"><b>테이블 약 290개, 하루 약 10억 건</b></td><td data-label="측정 근거">배치 약 190개 전환</td><td data-label="담당">전담</td></tr><tr><th scope="row" data-label="지표">평균 배치 시간 (Tez → Spark)</th><td data-label="이전">2시간</td><td data-label="이후"><b>30분</b></td><td data-label="측정 근거">인턴 시기 배치 전환</td><td data-label="담당">직접</td></tr><tr><th scope="row" data-label="지표">Oracle 파이프라인 임시 테이블</th><td data-label="이전">57개</td><td data-label="이후"><b>17개</b></td><td data-label="측정 근거">한 번만 참조되는 테이블을 CTE로 흡수</td><td data-label="담당">직접</td></tr><tr><th scope="row" data-label="지표">부정사용 탐지 결과 활용</th><td data-label="이전">–</td><td data-label="이후"><b>초기 보험금액 산정에 사용</b></td><td data-label="측정 근거">상무 라인, 월납형 자동차 보험</td><td data-label="담당">전담</td></tr></tbody></table></div>
+
+                <h2 class="section-title section-title-gap" id="quality-title">데이터 품질 문제 해결 사례</h2>
+                <div class="table-wrap"><table class="rt "><thead><tr><th scope="col">문제</th><th scope="col">원인</th><th scope="col">해결</th></tr></thead><tbody><tr><th scope="row" data-label="문제">월별 상담사 인원이 보고 자료와 맞지 않음</th><td data-label="원인">실적 테이블 기준으로 집계해 실적 없는 달의 상담사가 빠짐</td><td data-label="해결">상담사 × 월 기준 틀을 먼저 만들고 실적을 LEFT JOIN</td></tr><tr><th scope="row" data-label="문제">최종 영업 상태가 모든 상담사에게 같은 값</th><td data-label="원인">FIRST_VALUE에 상담사 단위 PARTITION BY 누락</td><td data-label="해결">상담사 단위 파티션 지정</td></tr><tr><th scope="row" data-label="문제">활동만 있는 날, 실적만 있는 날이 누락</th><td data-label="원인">서로 다른 기준 날짜를 하나로 조인</td><td data-label="해결">활동일자와 청약일자를 독립 컬럼으로 둔 3갈래 UNION ALL</td></tr><tr><th scope="row" data-label="문제">CDC 실행 이력이 충돌</th><td data-label="원인">여러 작업이 이력 테이블에 동시 쓰기</td><td data-label="해결">결과를 오케스트레이터가 받아 순차 기록</td></tr><tr><th scope="row" data-label="문제">Tibero 테이블 분할 수집 실패</th><td data-label="원인">DATE 타입 바인딩 문제로 Spark 기본 분할 미동작</td><td data-label="해결">데이터 분포 기준으로 구간을 직접 나눠(NTILE) 수집</td></tr><tr><th scope="row" data-label="문제">Hive 테이블 읽기 오류</th><td data-label="원인">Spark가 쓴 Parquet과 Hive DDL의 DECIMAL 인코딩 불일치</td><td data-label="해결">인코딩 차이를 찾아 해결</td></tr><tr><th scope="row" data-label="문제">주행거리 데이터 누락을 악용할 가능성</th><td data-label="원인">플러그를 뽑으면 주행 데이터가 들어오지 않음</td><td data-label="해결">사고 신고와 주행 기록을 대조하는 탐지 대시보드</td></tr></tbody></table></div>
+            </div>
+        </section>
+
+        <!-- Ops -->
+        <section class="section" aria-labelledby="ops-title">
+            <div class="wrap">
+                <h2 class="section-title" id="ops-title">운영·튜닝 경험</h2>
+                <div class="columns">
+                    <div class="col">
+                        <h3>실시간 주행 데이터 수집</h3>
+                        <p class="col-tag">운영·튜닝</p>
+                        <ul class="dash"><li>Kafka와 Spark Structured Streaming, 약 70만 디바이스, 초당 10만 이벤트</li><li>마이크로배치 1~2분 유지, Executor 수·병렬도·셔플 파티션·실행 주기 튜닝</li><li>체크포인트 경로 분리, 장애 시 오프셋 기반 재처리 검증</li><li>장시간 작업의 Kerberos 티켓 만료와 스토리지 인증 오류 대응</li></ul>
+                    </div>
+                    <div class="col">
+                        <h3>무중단 스냅샷 갱신</h3>
+                        <p class="col-tag">운영·튜닝</p>
+                        <ul class="dash"><li>10분 주기 스냅샷 테이블을 1~2분 안에 갱신</li><li>새 데이터를 스테이징 경로에 쓴 뒤 Hive 테이블 위치를 한 번에 바꿔, 갱신 중에도 조회 유지</li></ul>
+                    </div>
+                    <div class="col">
+                        <h3>데이터 마트와 플랫폼</h3>
+                        <p class="col-tag">직접 수행</p>
+                        <ul class="dash"><li>주행, 고객, 보상, 손해율 등 디지털 보험 데이터 마트 구축</li><li>HDInsight에서 Azure Databricks(Delta Lake)로의 이관 설계 진행 중</li></ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Career -->
+        <section class="section" id="career" aria-labelledby="career-title">
+            <div class="wrap">
+                <h2 class="section-title" id="career-title">경력</h2>
+                <article class="role">
+                    <div class="role-meta"><p class="role-dates">2025.10 – 현재</p><p>캐롯손해보험과 합병 후 재직</p></div>
+                    <div>
+                        <h3 class="role-company">한화손해보험 Data Lab</h3>
+                        <p class="role-text">TM 상담사 마트, CDC 수집 파이프라인, Databricks 이관 설계</p>
+                    </div>
+                </article>
+                <article class="role">
+                    <div class="role-meta"><p class="role-dates">2024.07 – 2025.10</p></div>
+                    <div>
+                        <h3 class="role-company">캐롯손해보험 Data Lab</h3>
+                        <p class="role-title">Data Analytics Engineer</p>
+                        <p class="role-text">CDC 재설계, Oozie → Airflow 이관, 디지털 보험 데이터 마트, Power BI 실적 대시보드, 부정사용 탐지·이탈율 분석</p>
+                    </div>
+                </article>
+                <article class="role">
+                    <div class="role-meta"><p class="role-dates">2024.04 – 2024.07</p></div>
+                    <div>
+                        <h3 class="role-company">캐롯손해보험</h3>
+                        <p class="role-title">DW/BI 인턴</p>
+                        <p class="role-text">KPI 데이터 마트, Power BI 대시보드 운영, Hive(Tez) 배치의 Spark 전환</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Skills -->
+        <section class="section" id="skills-ko" aria-labelledby="skills-ko-title">
+            <div class="wrap">
+                <h2 class="section-title" id="skills-ko-title">기술</h2>
+                <div class="skills">
+                    <div class="skill-group"><h3>SQL·모델링</h3><ul class="plain"><li>Hive SQL, Spark SQL</li><li>Oracle SQL (윈도우 함수, CTE)</li><li>집계 마트 설계</li></ul></div>
+                    <div class="skill-group"><h3>병렬 처리·Hadoop</h3><ul class="plain"><li>Azure HDInsight (Hadoop, Hive, Tez, YARN)</li><li>Spark, PySpark</li><li>Spark JDBC CDC (Tibero, MySQL)</li><li>Kafka, Structured Streaming</li></ul></div>
+                    <div class="skill-group"><h3>Python·오케스트레이션</h3><ul class="plain"><li>Python</li><li>Airflow (DAG 작성·이관)</li><li>Oozie (분석·이관)</li></ul></div>
+                    <div class="skill-group"><h3>BI·시각화</h3><ul class="plain"><li>Power BI (대시보드, 시맨틱 모델, 리프레시)</li><li>Tableau (공모전 최우수상)</li><li>Superset (마트 연동)</li></ul></div>
+                    <div class="skill-group"><h3>플랫폼·인프라</h3><ul class="plain"><li>Azure Databricks·Delta Lake (이관 설계)</li><li>Docker, Linux, Shell</li><li>AWS (EC2, ECR, ECS, RDS, Route53, IAM)</li></ul></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education, awards, side work, ways of working -->
+        <section class="section" aria-labelledby="more-title">
+            <div class="wrap">
+                <h2 class="visually-hidden" id="more-title">학력, 교육, 업무 밖 활동</h2>
+                <div class="columns">
+                    <div class="col">
+                        <h3>학력·수상·어학</h3>
+                        <dl class="facts">
+                            <div><dt>학력</dt><dd>서울과학기술대학교 산업정보시스템공학 학사 <span class="aside">2017 – 2023</span></dd></div>
+                            <div><dt>수상</dt><dd>천안시 데이터 시각화 아이디어 공모전 최우수상 (최종 2위). 천안시 노인의 위험 지역 선별과 원인 분석, Tableau로 시각화 <span class="aside">2023</span></dd></div>
+                            <div><dt>어학</dt><dd>OPIc IH (비즈니스 회화) <span class="aside">2022.08</span></dd></div>
+                        </dl>
+                    </div>
+                    <div class="col">
+                        <h3>교육</h3>
+                        <dl class="facts">
+                            <div><dt>2024.01 – 02</dt><dd>LG AIMERS, AI 교육 과정</dd></div>
+                            <div><dt>2023.06 – 12</dt><dd>LG헬로비전 DX DATA 스쿨 1기. 데이터 분석부터 개발까지 학습. 여기서 배운 Tableau로 천안시 데이터 시각화 공모전 최우수상 수상</dd></div>
+                        </dl>
+                    </div>
+                    <div class="col">
+                        <h3>업무 밖에서 만든 것</h3>
+                        <p class="col-tag">취미로 만들고 있는 것들이라 짧게만 적습니다.</p>
+                        <ul class="dash"><li><b>리플라이링크</b> (<a href="https://replylink.co.kr" target="_blank" rel="noopener">replylink.co.kr</a>). 아내가 인스타그램 계정을 운영하면서 댓글 단 사람에게 링크를 일일이 DM으로 보내야 해서 만든 자동 DM 서비스입니다. 오픈소스 OpenReply를 바탕으로 AI 코딩 도구를 써서 기능을 붙였고, 사주·KBO 구단 테스트 페이지도 더했습니다.</li><li><b>주식 반자동 매매 도구와 투자 대시보드.</b> 시세를 모아 매매 신호를 알려 주는 도구와, 그 결과를 보는 대시보드입니다.</li></ul>
+                    </div>
+                </div>
+
+                <div class="ways">
+                    <h3>일하는 방식</h3>
+                    <ul class="dash"><li>반복 업무는 자동화하고, 요청이 많은 작업은 프로세스로 만들어 내부 위키에 문서화합니다.</li><li>단순히 작동하는 파이프라인이 아니라, 데이터가 늘어도 버티는 구조를 만드는 것을 목표로 합니다.</li><li>데이터 분석으로 IT를 시작해, 현업이 더 편하게 데이터를 쓰는 환경을 만드는 데 관심이 많습니다.</li><li>목표 달성만큼 일의 과정에서 재미를 찾는 편입니다.</li></ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section class="section contact" id="contact" aria-labelledby="contact-title">
+            <div class="wrap">
+                <h2 class="section-title" id="contact-title">연락처</h2>
+                <dl class="contact-list">
+                    <div><dt>이메일</dt><dd><a href="mailto:zztisdudoo@gmail.com">zztisdudoo@gmail.com</a></dd></div>
+                    <div><dt>GitHub</dt><dd><a href="https://github.com/svng-zu" target="_blank" rel="noopener">github.com/svng-zu</a></dd></div>
+                    <div><dt>학습 블로그</dt><dd><a href="https://dxdata.tistory.com" target="_blank" rel="noopener">dxdata.tistory.com</a></dd></div>
+                    <div><dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/alex-hwang1998/" target="_blank" rel="noopener">linkedin.com/in/alex-hwang1998</a></dd></div>
+                </dl>
+            </div>
+        </section>
+        </div>
+        <div data-for="en" lang="en">
         <!-- Hero -->
-        <section class="hero" id="top">
+        <section class="hero" id="top-en">
             <div class="wrap">
                 <h1 class="hero-name">Seongju<br>Hwang</h1>
                 <div class="hero-intro">
                     <p class="hero-lede">Data engineer at Hanwha General Insurance, running the Spark pipelines that
                         move about a billion rows a day into the analytics lake.</p>
-                    <p class="hero-facts">300+ Oozie workflows, CDC ingestion from MySQL and Tibero over Spark JDBC,
-                        and streaming events from 700K IoT devices. Moving CDC off Sqoop cut end-to-end
-                        latency from 7 hours to 3.</p>
+                    <p class="hero-facts">~290 tables across ~190 batch jobs, CDC ingestion from MySQL and Tibero over Spark JDBC,
+                        and streaming events from 700K IoT devices. Moving CDC off Sqoop cut daily load
+                        time from about 7 hours to about 3.5, with zero timeout failures since.</p>
                 </div>
 
                 <figure class="flow-figure">
-                    <div class="flow" id="flow">
+                    <div class="flow" id="flow-en">
                         <p class="flow-head" style="grid-area:h1">Sources</p>
                         <p class="flow-head" style="grid-area:h2">Processing</p>
                         <p class="flow-head" style="grid-area:h3">Lake</p>
@@ -781,7 +1841,7 @@
                         </div>
                         <div class="node" style="grid-area:p1">
                             <p class="node-name">Spark batch</p>
-                            <p class="node-detail">DataFrame transforms, 300+ Oozie workflows</p>
+                            <p class="node-detail">~190 batch jobs, ~290 tables, on Airflow</p>
                         </div>
                         <div class="conn" style="grid-area:c2">
                             <span class="conn-line" style="--step:1" aria-hidden="true"></span>
@@ -829,28 +1889,29 @@
         </section>
 
         <!-- Experience -->
-        <section class="section" id="experience" aria-labelledby="experience-title">
+        <section class="section" id="experience-en" aria-labelledby="experience-title-en">
             <div class="wrap">
-                <h2 class="section-title" id="experience-title">Experience</h2>
+                <h2 class="section-title" id="experience-title-en">Experience</h2>
 
                 <article class="role">
                     <div class="role-meta">
                         <p class="role-dates">Jul 2024 – Present</p>
+                        <p>Carrot Insurance until the Oct 2025 merger</p>
                         <p>Seoul, Korea</p>
                     </div>
                     <div>
                         <h3 class="role-company">Hanwha General Insurance</h3>
-                        <p class="role-title">Data Engineer</p>
+                        <p class="role-title">Data Analytics Engineer, Data Lab</p>
 
                         <div class="role-group">
                             <h4>Platform &amp; pipelines</h4>
                             <ul>
                                 <li><b>Large-scale ingestion.</b> Built parallel extraction pipelines on Spark JDBC
                                     that ingest 100M+ rows from MySQL and Tibero into Azure HDFS.</li>
-                                <li><b>Workflow management.</b> Designed and maintain 300+ Oozie workflows processing
-                                    ~1B rows a day, with retries and failure isolation.</li>
-                                <li><b>Latency.</b> Migrated Sqoop-based CDC to Spark JDBC, cutting end-to-end
-                                    latency from 7h to 3h.</li>
+                                <li><b>Workflow management.</b> Rebuilt ~190 batch jobs (~290 tables) processing
+                                    ~1B rows a day, with retries and failure isolation, then moved them from Oozie to Airflow.</li>
+                                <li><b>Load time.</b> Migrated Sqoop-based CDC to Spark JDBC, cutting daily load time
+                                    from ~7h to ~3.5h and timeout failures from 1–2 a week to zero.</li>
                                 <li><b>Platform operations.</b> Run the Azure HDInsight Spark and Hive platform,
                                     including YARN-level resource tuning.</li>
                             </ul>
@@ -863,8 +1924,8 @@
                                     100K events/sec from 700K devices via Kafka.</li>
                                 <li><b>BI infrastructure.</b> Built the end-to-end Power BI setup, including the
                                     on-prem gateway and security coordination.</li>
-                                <li><b>Modern stack.</b> Led PoCs for Apache Superset and Databricks to modernize the
-                                    analytics stack.</li>
+                                <li><b>Modern stack.</b> Supply the data mart behind the Apache Superset TM dashboards and
+                                    am designing the move to Azure Databricks (Delta Lake).</li>
                             </ul>
                         </div>
                     </div>
@@ -893,9 +1954,9 @@
         </section>
 
         <!-- Skills -->
-        <section class="section" id="skills" aria-labelledby="skills-title">
+        <section class="section" id="skills-en" aria-labelledby="skills-title-en">
             <div class="wrap">
-                <h2 class="section-title" id="skills-title">Skills</h2>
+                <h2 class="section-title" id="skills-title-en">Skills</h2>
                 <div class="skills">
                     <div class="skill-group">
                         <h3>Languages</h3>
@@ -919,7 +1980,7 @@
                             <li>Azure HDInsight</li>
                             <li>Airflow &amp; Oozie</li>
                             <li>HDFS, Hive Metastore</li>
-                            <li>Databricks (PoC)</li>
+                            <li>Databricks (migration design)</li>
                         </ul>
                     </div>
                     <div class="skill-group">
@@ -941,12 +2002,16 @@
                 </div>
             </div>
         </section>
+        </div>
     </main>
 
     <footer class="site-footer">
         <div class="wrap">
-            <p>© 2026 Seongju Hwang</p>
-            <p><a href="https://github.com/svng-zu/MyPortFolio/raw/main/Resume.pdf">Download resume (PDF)</a></p>
+            <p>© 2026 <span data-for="ko">황성주</span><span data-for="en">Seongju Hwang</span></p>
+            <p class="footer-links">
+                <a href="https://www.linkedin.com/in/alex-hwang1998/" target="_blank" rel="noopener">LinkedIn</a>
+                <a href="https://github.com/svng-zu/MyPortFolio/raw/main/Resume.pdf"><span data-for="ko">이력서 PDF 내려받기</span><span data-for="en">Download resume (PDF)</span></a>
+            </p>
         </div>
     </footer>
 
@@ -957,7 +2022,7 @@
                 <a class="btn btn-secondary" href="https://github.com/svng-zu/MyPortFolio/raw/main/Resume.pdf">
                     Download PDF
                 </a>
-                <button class="icon-btn" type="button" data-close-resume aria-label="Close resume">
+                <button class="icon-btn" type="button" data-close-resume aria-label="닫기 / Close">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" aria-hidden="true">
                         <path d="M6 6l12 12M18 6L6 18" />
@@ -969,28 +2034,54 @@
     </dialog>
 
     <script>
-        document.documentElement.classList.add('js');
+        (() => {
+            const root = document.documentElement;
+            const titles = {
+                ko: '황성주 | 데이터 분석 엔지니어',
+                en: 'Seongju Hwang — Data Engineer'
+            };
 
-        // Draw the pipeline once, after first paint.
-        requestAnimationFrame(() => requestAnimationFrame(() => {
-            document.getElementById('flow').classList.add('is-drawn');
-        }));
+            function setLang(lang, push) {
+                root.dataset.view = lang;
+                root.lang = lang;
+                document.title = titles[lang];
+                if (push) {
+                    const url = new URL(location.href);
+                    if (lang === 'ko') url.searchParams.delete('lang'); else url.searchParams.set('lang', lang);
+                    url.hash = '';
+                    history.replaceState(null, '', url);
+                    window.scrollTo({ top: 0 });
+                }
+            }
+            setLang(root.dataset.view, false);
 
-        // Resume dialog: native <dialog> gives focus trap + Esc to close.
-        const dialog = document.getElementById('resumeDialog');
-        const frame = dialog.querySelector('iframe');
-
-        document.querySelectorAll('[data-open-resume]').forEach((btn) => {
-            btn.addEventListener('click', () => {
-                if (!frame.src) frame.src = frame.dataset.src; // load the viewer only when asked
-                dialog.showModal();
+            document.querySelectorAll('[data-set-lang]').forEach((a) => {
+                a.addEventListener('click', (ev) => {
+                    if (ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.button !== 0) return; // keep new-tab behaviour
+                    ev.preventDefault();
+                    setLang(a.dataset.setLang, true);
+                    const next = document.querySelector(`.lang-switch[data-for="${a.dataset.setLang}"]`);
+                    if (next) next.focus();
+                });
             });
-        });
 
-        dialog.querySelector('[data-close-resume]').addEventListener('click', () => dialog.close());
-        dialog.addEventListener('click', (e) => {
-            if (e.target === dialog) dialog.close(); // click on backdrop
-        });
+            // Draw the pipeline once, after first paint.
+            requestAnimationFrame(() => requestAnimationFrame(() => {
+                document.querySelectorAll('.flow').forEach((f) => f.classList.add('is-drawn'));
+            }));
+
+            // Resume dialog: native <dialog> gives focus trap + Esc to close.
+            const dialog = document.getElementById('resumeDialog');
+            const frame = dialog.querySelector('iframe');
+            document.querySelectorAll('[data-open-resume]').forEach((btn) => {
+                btn.addEventListener('click', () => {
+                    if (!frame.src) frame.src = frame.dataset.src; // load the viewer only when asked
+                    dialog.showModal();
+                });
+            });
+            dialog.querySelector('[data-close-resume]').addEventListener('click', () => dialog.close());
+            dialog.addEventListener('click', (ev) => { if (ev.target === dialog) dialog.close(); });
+        })();
     </script>
 </body>
 
